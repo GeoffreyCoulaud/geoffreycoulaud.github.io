@@ -1,0 +1,137 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+body {
+  margin: 0px;
+  font-family: 'Roboto', sans-serif;
+  background-color: #39529e;
+  font-weight: 400;
+  color: #fff;
+}
+h1,
+h2,
+strong {
+  font-weight: 500;
+}
+h2 {
+  font-size: 2em;
+  margin-bottom: 2rem;
+}
+#navigation {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+}
+#navigation a {
+  display: inline-block;
+  margin: 1em;
+  color: inherit;
+}
+#landing {
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0px 10%;
+}
+#landing h1,
+#landing h2 {
+  margin: 0px;
+}
+#landing h1 {
+  font-size: 4em;
+  margin-bottom: 0.25em;
+}
+#landing h2 {
+  font-weight: 400;
+  font-size: 3.5em;
+}
+#landing img {
+  width: 20em;
+}
+#description {
+  min-height: 50vh;
+  padding: 0px 10%;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+#description article:nth-child(2) {
+  margin-top: 5em;
+}
+#description article:nth-child(3) {
+  margin-top: 10em;
+}
+#description article {
+  width: calc(33% - 2em);
+  border-radius: 2em;
+  padding: 2em;
+  color: #000;
+  box-sizing: border-box;
+  background-color: #fff;
+  box-shadow: 0px 0px 2em rgba(0,0,0,0.25);
+}
+#description article h2 {
+  text-align: center;
+  margin-top: 0px;
+}
+#description article img {
+  display: block;
+  margin: 1em auto 0px auto;
+  width: 30%;
+}
+#realisations {
+  margin: 20em 0px 10em 0px;
+}
+#realisations h2 {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+#realisations div {
+  display: grid;
+  grid-template-columns: 1fr 20em 20em 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: ". case1 case2 .";
+  gap: 2em;
+}
+#realisations div a:nth-child(1) {
+  grid-area: case1;
+}
+#realisations div a:nth-child(2) {
+  grid-area: case2;
+}
+#realisations div a:nth-child(even) {
+  transform: translateY(3em);
+}
+#realisations div a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 20em;
+  height: 20em;
+  padding: 2em;
+  background-color: #fff;
+  border-radius: 2em;
+  box-shadow: 0px 0px 2em rgba(0,0,0,0.25);
+}
+#realisations div a img {
+  display: block;
+  width: 100%;
+}
+#contact {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 2em;
+}
+#contact h2 {
+  margin-bottom: 0.5em;
+}
+#contact a {
+  color: inherit;
+}

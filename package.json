@@ -1,0 +1,24 @@
+{
+  "name": "site-pro-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-stylus": "stylus index.styl -o index.css",
+    "build-watch-stylus": "stylus index.styl -o index.css -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeoffreyCoulaud/site-pro-3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GeoffreyCoulaud/site-pro-3/issues"
+  },
+  "homepage": "https://github.com/GeoffreyCoulaud/site-pro-3#readme",
+  "devDependencies": {
+    "stylus": "^0.55.0"
+  }
+}
