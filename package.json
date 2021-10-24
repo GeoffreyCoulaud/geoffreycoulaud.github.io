@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-stylus": "stylus index.styl -o index.css",
-    "build-watch-stylus": "stylus index.styl -o index.css -w"
+    "build-stylus": "stylus src/stylus -o dist/css",
+    "build-watch-stylus": "stylus src/stylus -o dist/css -w"
   },
   "repository": {
     "type": "git",

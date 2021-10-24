@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+body {
+  font-family: "Quicksand", sans-serif;
+  overflow-y: hidden;
+  height: 100vh;
+  margin: 0px;
+  width: auto;
+}
+h1,
+h2,
+h3 {
+  font-family: "Abril Fatface", serif;
+  color: #39529e;
+}
+.hz-scroll {
+  white-space: nowrap;
+}
+.hz-scroll>* {
+  vertical-align: top;
+  display: inline-block;
+  white-space: normal;
+}
+#wrapper {
+  height: 100%;
+}
+#wrapper>section {
+  height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  display: inline-flex;
+  padding: 2em;
+}
+#wrapper>section .floating-title {
+  align-self: flex-start;
+  position: sticky;
+  left: 2em;
+  top: 2em;
+}
+#landing {
+  width: 100vh;
+  background-color: #39529e;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  padding: 0px;
+}
+#landing h1,
+#landing h2 {
+  font-family: "Montserrat", sans-serif;
+  margin: 0px;
+  color: #fff;
+}
+#landing h1 {
+  font-size: 4em;
+  margin-bottom: 0.25em;
+}
+#landing h2 {
+  font-size: 3em;
+  font-weight: 400;
+  margin-bottom: 3em;
+}
+#landing img {
+  width: 15em;
+}
+#landing nav {
+  position: absolute;
+  bottom: 1.5em;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#landing nav a {
+  display: inline-block;
+  color: #fff;
+  margin: 0px 0.5em;
+}
+#informations {
+  padding: 2em;
+}
+#informations>div {
+  align-items: flex-start;
+  margin: auto 0px;
+  display: flex;
+}
+#informations>div hr {
+  border: 0px solid #000;
+  border-right-width: 1px;
+  align-self: center;
+  margin: 0px 2em;
+  height: 5em;
+  width: 0px;
+}
+#informations>div article {
+  max-width: 20vw;
+}
+#informations>div article h3 {
+  font-size: 2em;
+  margin-bottom: 0.25em;
+}
+#realisations {
+  margin: 0px 10em;
+}
+#realisations>div {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#realisations>div>* {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+  width: 30vh;
+  box-sizing: border-box;
+  padding: 2em;
+  border-radius: 2em;
+  background-color: #fff;
+  box-shadow: 0px 0px 2em rgba(0,0,0,0.2);
+  margin: 2em;
+  position: relative;
+/*
+			&:nth-child(even)
+				transform: translateY(2em)
+			*/
+}
+#realisations>div>* img {
+  width: 100%;
+}
+#contact {
+  padding: 2em;
+}
+#contact>div {
+  padding-right: 12em;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 3em;
+}
+#contact h3 {
+  margin-bottom: 0.25em;
+}
+#contact a {
+  color: inherit;
+}
