@@ -47,13 +47,15 @@ strong {
   width: 20rem;
 }
 #main {
-  width: 100%;
-  grid-template-columns: repeat(3, 6rem) 1fr;
-  grid-template-rows: auto auto auto;
+  grid-template-columns: repeat(3, 4.6rem) 1fr;
+  grid-template-rows: repeat(3, max-content);
   grid-template-areas: "t1 .  .  content1" "t1 t2 .  content2" "t1 t2 t3 content3";
   box-sizing: border-box;
   padding-left: 2rem;
+  column-gap: 2rem;
+  row-gap: 4rem;
   display: grid;
+  width: 100%;
 }
 #main>* {
   width: 100%;
@@ -76,9 +78,6 @@ strong {
 #main .title-wrapper:nth-of-type(3) {
   grid-area: t3;
 }
-#main .content {
-  min-height: 50rem;
-}
 #main .content h3 {
   font-family: "Abril Fatface", 'Times New Roman', Times, serif;
   font-size: 2em;
@@ -94,15 +93,6 @@ strong {
   position: relative;
   min-height: 50rem;
 }
-#main .title-wrapper:nth-child(1) {
-  grid-area: t1;
-}
-#main .title-wrapper:nth-child(2) {
-  grid-area: t2;
-}
-#main .title-wrapper:nth-child(3) {
-  grid-area: t3;
-}
 #main .title-wrapper h2 {
   writing-mode: vertical-lr;
   transform: scale(-1);
@@ -112,7 +102,6 @@ strong {
   margin: 0px;
   top: 3rem;
 }
-#developper,
 section.test {
   height: 100vh;
 }
