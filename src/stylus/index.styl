@@ -3,6 +3,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique&display=swap');
 
+/*
+	--- Philosophie du design ---
+
+	Tout au long de ce fichier, le design par défaut est la version mobile.
+	Les media queries (@media) changent le style pour une amélioration progressive.
+	J'applique la technique du "mobile first" parce qu'il est plus simple 
+	d'étendre un design compact que de compacter un design complexe.
+
+	Dans l'idéal, toutes les media queries sont commentées pour expliquer :
+	- Quel est le nom de cette configuration
+	- Pourquoi ce seuil
+*/
+
 body
 	font-family: "Zen Kaku Gothic Antique", Arial, Helvetica, sans-serif;
 	background-color: #3a73cc;
@@ -45,6 +58,10 @@ h1, h2, strong
 		width: 10rem;
 		bottom: 1em;
 
+	/*
+		Configuration : Mobiles larges, tablettes, ordinateurs
+		Seuil : Correspond à la largeur minimale pour écrire "Geoffrey".
+	*/
 	@media (min-width: 33rem)
 		font-size: 10rem;
 		height: 60rem;
@@ -108,6 +125,10 @@ h1, h2, strong
 			font-size: 5rem;
 			margin: 0px;
 
+	/*
+		Configuration : Mobiles larges (une colonne de titres verticaux)
+		Seuil : On a assez d'espace pour faire coexister un titre verticalement en plus du contenu.
+	*/
 	@media (min-width: 30rem)
 		grid-template-columns: 4.6rem calc(100% - 4.6rem - 2rem);
 		grid-template-rows: repeat(3, max-content);
@@ -129,14 +150,9 @@ h1, h2, strong
 				top: 3rem;
 
 	/*
-	@media (min-width: 50rem)
-		grid-template-columns: 4.6rem calc(100% - 4.6rem * 2 - 2rem * 2) 4.6rem;
-		grid-template-rows: repeat(3, max-content);
-		grid-template-areas:\
-			"t1 content1 ."\
-			"t2 content2 ."\
-			"t3 content3 .";*/
-
+		Configuration : Tablettes, ordinateurs (trois colonnes de titres verticaux)
+		Seuil : On a de l'espace à foison en largeur, donc on peut afficher les trois titres verticaux et obtenir un effet sympa.
+	*/
 	@media (min-width: 85rem)
 		grid-template-columns: repeat(3, 4.6rem) calc(100% - 4.6rem * 6 - 2rem * 6) repeat(3, 4.6rem);
 		grid-template-rows: repeat(3, max-content);
@@ -164,6 +180,10 @@ h1, h2, strong
 		box-shadow: smallShadow;
 		color: black;
 
+	/*
+		Configuration : Tablette, ordinateur (classe, les cartes sont affichées en éventail et sont interactives)
+		Seuil : L'éventail nécessite beaucoup de largeur, c'est assez pour qu'il ne se superpose pas avec le.s titre.s
+	*/
 	@media (min-width: 80rem)
 		grid-template-columns: repeat(4, 25%);
 		grid-template-rows: max-content;

@@ -2,6 +2,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique&display=swap");
+/*
+	--- Philosophie du design ---
+
+	Tout au long de ce fichier, le design par défaut est la version mobile.
+	Les media queries (@media) changent le style pour une amélioration progressive.
+	J'applique la technique du "mobile first" parce qu'il est plus simple 
+	d'étendre un design compact que de compacter un design complexe.
+
+	Dans l'idéal, toutes les media queries sont commentées pour expliquer :
+	- Quel est le nom de cette configuration
+	- Pourquoi ce seuil
+*/
 body {
   font-family: "Zen Kaku Gothic Antique", Arial, Helvetica, sans-serif;
   background-color: #3a73cc;
@@ -27,6 +39,10 @@ strong {
   position: relative;
   font-size: 5rem;
   height: 100vh;
+/*
+		Configuration : Mobiles larges, tablettes, ordinateurs
+		Seuil : Correspond à la largeur minimale pour écrire "Geoffrey".
+	*/
 }
 #landing > * {
   filter: drop-shadow(0px 0px 1rem rgba(0,0,0,0.2));
@@ -74,10 +90,13 @@ strong {
   display: grid;
   width: 100%;
 /*
-	@media (min-width: 50rem)
-		grid-template-columns: 4.6rem calc(100% - 4.6rem * 2 - 2rem * 2) 4.6rem;
-		grid-template-rows: repeat(3, max-content);
-		grid-template-areas:			"t1 content1 ."			"t2 content2 ."			"t3 content3 .";*/
+		Configuration : Mobiles larges (une colonne de titres verticaux)
+		Seuil : On a assez d'espace pour faire coexister un titre verticalement en plus du contenu.
+	*/
+/*
+		Configuration : Tablettes, ordinateurs (trois colonnes de titres verticaux)
+		Seuil : On a de l'espace à foison en largeur, donc on peut afficher les trois titres verticaux et obtenir un effet sympa.
+	*/
 }
 #main>* {
   width: 100%;
@@ -149,6 +168,10 @@ strong {
   margin-bottom: 5rem;
   display: grid;
   gap: 2rem;
+/*
+		Configuration : Tablette, ordinateur (classe, les cartes sont affichées en éventail et sont interactives)
+		Seuil : L'éventail nécessite beaucoup de largeur, c'est assez pour qu'il ne se superpose pas avec le.s titre.s
+	*/
 }
 #developper .card {
   padding: 2rem 2rem 4rem 2rem;
