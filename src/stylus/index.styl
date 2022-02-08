@@ -26,8 +26,8 @@ h1, h2, strong
 	align-items: center;
 	position: relative;
 	display: flex;
-	height: 50rem;
-	margin-bottom: 20rem;
+	height: 60rem;
+	margin-bottom: 10rem;
 
 	h1
 		transform: translate(-50%, -50%) translateZ(-20px) scale(1.2);
@@ -46,14 +46,14 @@ h1, h2, strong
 		width: 20rem;
 
 #main
-	grid-template-columns: repeat(3, 4.6rem) 1fr;
+	grid-template-columns: repeat(3, 4.6rem) 1fr repeat(3, 4.6rem);
 	grid-template-rows: repeat(3, max-content);
 	grid-template-areas:\
-		"t1 .  .  content1"\
-		"t1 t2 .  content2"\
-		"t1 t2 t3 content3";
+		"t1 .  .  content1 . . ."\
+		"t1 t2 .  content2 . . ."\
+		"t1 t2 t3 content3 . . .";
 	box-sizing: border-box;
-	padding-left: 2rem;
+	padding: 0px 2rem;
 	column-gap: 2rem;
 	row-gap: 4rem;
 	display: grid;
@@ -96,7 +96,88 @@ h1, h2, strong
 			top: 3rem;
 
 #developper
-	// rien
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: max-content;
+	margin-bottom: 10rem;
+	position: relative;
+	display: grid;
+
+	.card
+		w = 130%; // Largeur réelle d'une carte (par rapport à sa colonne)
+		bigShadow = 0px 0px 20rem 3rem rgba(0,0,0,0.5);
+		smallShadow = 0px 0px 1rem rgba(0,0,0,0.2);
+
+		box-shadow: smallShadow;
+		animation-timing-function: ease;
+		transform-origin: bottom center;
+		animation-play-state: running;
+		animation-iteration-count: 1;
+		padding: 2rem 2rem 4rem 2rem;
+		animation-fill-mode: both;
+		background-color: white;
+		animation-duration: 0.5s;
+		box-sizing: border-box;
+		border-radius: 1rem;
+		position: relative;
+		cursor: pointer;
+		color: black;
+		bottom: 4rem;
+		width: w;
+
+		&.shown
+			cursor: default;
+
+		// Effet "main" de cartes
+		nCol = 4;                      // Nombre de colonnes
+		wCol = unit(100 / nCol, "%");  // Largeur d'une colonne
+		angle = 40deg;                 // Angle d'amplitude de la main
+		startAngle = -1 * angle / 2;   // Angle de départ de la main
+		offset = 30rem;                // Amplitude du décalage entre les cartes
+		startOffset = -1 * offset / 2; // Décalage de départ des cartes 
+		for i in (0..3)
+
+			&:nth-child({i+1})
+				//          (50% - wCol * (i  + 1/2)) * nCol - (w  - 100%) / 2
+				left: "calc((50% - %s   * (%s + 0.5)) * %s   - (%s - 100%) / 2)" % (wCol i nCol w)
+				rotation = startAngle + i / (nCol - 1) * angle;
+				translation = startOffset + i / (nCol - 1) * offset;
+				transform: rotate(rotation) translateX(translation) translateY(0px);
+
+				&.shown
+					animation-name: "showCard%s" % i;
+
+				&.hiding
+					animation-name: "hideCard%s" % i;
+				
+				@keyframes showCard{i}
+					0%
+						transform: rotate(rotation) translateX(translation) translateY(0px);
+						z-index: 0;
+						box-shadow: smallShadow;
+					50%
+						transform: rotate(rotation) translateX(translation) translateY(-70%);
+						box-shadow: smallShadow;
+						z-index: 2;
+					100%
+						transform: rotate(0deg) translateX(0px) translateY(0px);
+						box-shadow: bigShadow;
+						z-index: 2;
+				
+				@keyframes hideCard{i}
+					0%
+						transform: rotate(0deg) translateX(0px) translateY(0px);
+						box-shadow: bigShadow;
+						z-index: 2;
+					50%
+						transform: rotate(rotation) translateX(translation) translateY(-70%);
+						box-shadow: smallShadow;
+						z-index: 0;
+					100%
+						transform: rotate(rotation) translateX(translation) translateY(0px);
+						box-shadow: smallShadow;
+						z-index: 0;
+
+
 
 #freelance
 	// rien
