@@ -22,40 +22,58 @@ h1, h2, strong
 
 #landing
 	transform-style: preserve-3d;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	display: flex;
-	height: 60rem;
 	margin-bottom: 10rem;
+	position: relative;
+	font-size: 5rem;
+	height: 100vh;
+
+	& > *
+		filter: drop-shadow(0px 0px 1rem rgba(0,0,0,0.2));
+		transform: translateX(-50%);
+		position: absolute;
+		left: 50%;
 
 	h1
-		transform: translate(-50%, -50%) translateZ(-20px) scale(1.2);
 		text-transform: uppercase;
+		line-height: 0.8em;
 		text-align: center;
-		position: absolute;
-		line-height: 1.5em;
-		font-size: 10rem;
+		font-size: 1em;
 		margin: 0px;
-		left: 50%;
-		top: 50%;
-	
+		top: 1em;
+
 	img
-		filter: drop-shadow(0px 0px 1rem rgba(0,0,0,0.2));
-		position: relative;
-		width: 20rem;
+		width: 10rem;
+		bottom: 1em;
+
+	@media (min-width: 33rem)
+		font-size: 10rem;
+		height: 60rem;
+
+		h1
+			transform: translate(-50%, -50%) translateZ(-20px) scale(1.2);
+			line-height: 1.5em;
+			left: 50%;
+			top: 50%;
+
+		img
+			transform: translate(-50%, -50%);
+			width: 20rem;
+			top: 50%;
 
 #main
-	grid-template-columns: repeat(3, 4.6rem) 1fr repeat(3, 4.6rem);
-	grid-template-rows: repeat(3, max-content);
+	grid-template-columns: 100%;
+	grid-template-rows: repeat(6, max-content);
 	grid-template-areas:\
-		"t1 .  .  content1 . . ."\
-		"t1 t2 .  content2 . . ."\
-		"t1 t2 t3 content3 . . .";
+		"t1"\
+		"content1"\
+		"t2"\
+		"content2"\
+		"t3"\
+		"content3";
 	box-sizing: border-box;
 	padding: 0px 2rem;
 	column-gap: 2rem;
-	row-gap: 4rem;
+	row-gap: 2rem;
 	display: grid;
 	width: 100%;
 
@@ -82,102 +100,143 @@ h1, h2, strong
 			font-size: 1.2em;
 			margin: 1rem 0px;
 
-	.title-wrapper
-		position: relative;
-		min-height: 50rem;
-
-		h2
-			writing-mode: vertical-lr;
-			transform: scale(-1);
-			text-align: right;
-			position: sticky;
+	.title-wrapper 
+		
+		&>*
+			writing-mode: horizontal-tb;
+			text-align: center;
 			font-size: 5rem;
 			margin: 0px;
-			top: 3rem;
+
+	@media (min-width: 30rem)
+		grid-template-columns: 4.6rem calc(100% - 4.6rem - 2rem);
+		grid-template-rows: repeat(3, max-content);
+		grid-template-areas:\
+			"t1 content1"\
+			"t2 content2"\
+			"t3 content3";
+		row-gap: 4rem;
+
+		.title-wrapper
+			position: relative;
+
+			&>*
+				writing-mode: vertical-lr;
+				transform: scale(-1);
+				text-align: right;
+				position: sticky;
+				font-size: 5rem;
+				top: 3rem;
+
+	/*
+	@media (min-width: 50rem)
+		grid-template-columns: 4.6rem calc(100% - 4.6rem * 2 - 2rem * 2) 4.6rem;
+		grid-template-rows: repeat(3, max-content);
+		grid-template-areas:\
+			"t1 content1 ."\
+			"t2 content2 ."\
+			"t3 content3 .";*/
+
+	@media (min-width: 85rem)
+		grid-template-columns: repeat(3, 4.6rem) calc(100% - 4.6rem * 6 - 2rem * 6) repeat(3, 4.6rem);
+		grid-template-rows: repeat(3, max-content);
+		grid-template-areas:\
+			"t1 .  .  content1 . . ."\
+			"t1 t2 .  content2 . . ."\
+			"t1 t2 t3 content3 . . .";
 
 #developper
-	grid-template-columns: repeat(4, 1fr);
-	grid-template-rows: max-content;
-	margin-bottom: 10rem;
-	position: relative;
+	bigShadow = 0px 0px 20rem 3rem rgba(0,0,0,0.5);
+	smallShadow = 0px 0px 1rem rgba(0,0,0,0.2);
+	
+	grid-template-rows: repeat(4, max-content);
+	grid-template-columns: 1fr;
+	margin-bottom: 5rem;
 	display: grid;
+	gap: 2rem;
 
 	.card
-		w = 130%; // Largeur réelle d'une carte (par rapport à sa colonne)
-		bigShadow = 0px 0px 20rem 3rem rgba(0,0,0,0.5);
-		smallShadow = 0px 0px 1rem rgba(0,0,0,0.2);
 
-		box-shadow: smallShadow;
-		animation-timing-function: ease;
-		transform-origin: bottom center;
-		animation-play-state: running;
-		animation-iteration-count: 1;
 		padding: 2rem 2rem 4rem 2rem;
-		animation-fill-mode: both;
-		background-color: white;
-		animation-duration: 0.5s;
 		box-sizing: border-box;
 		border-radius: 1rem;
-		position: relative;
-		cursor: pointer;
+		background-color: white;
+		box-shadow: smallShadow;
 		color: black;
-		bottom: 4rem;
-		width: w;
 
-		&.shown
-			cursor: default;
+	@media (min-width: 80rem)
+		grid-template-columns: repeat(4, 25%);
+		grid-template-rows: max-content;
+		padding: 5rem 0px;
+		gap: 0px;
 
-		// Effet "main" de cartes
-		nCol = 4;                      // Nombre de colonnes
-		wCol = unit(100 / nCol, "%");  // Largeur d'une colonne
-		angle = 40deg;                 // Angle d'amplitude de la main
-		startAngle = -1 * angle / 2;   // Angle de départ de la main
-		offset = 30rem;                // Amplitude du décalage entre les cartes
-		startOffset = -1 * offset / 2; // Décalage de départ des cartes 
-		for i in (0..3)
+		.card
+			w = 25rem; // Largeur réelle d'une carte
+			transform-origin: bottom center;
+			animation-timing-function: ease;
+			animation-iteration-count: 1;
+			animation-fill-mode: both;
+			animation-duration: 0.5s;
+			position: relative;
+			user-select: none;
+			cursor: pointer;
+			bottom: 4rem;
+			width: w;
 
-			&:nth-child({i+1})
-				//          (50% - wCol * (i  + 1/2)) * nCol - (w  - 100%) / 2
-				left: "calc((50% - %s   * (%s + 0.5)) * %s   - (%s - 100%) / 2)" % (wCol i nCol w)
-				rotation = startAngle + i / (nCol - 1) * angle;
-				translation = startOffset + i / (nCol - 1) * offset;
-				transform: rotate(rotation) translateX(translation) translateY(0px);
+			&.shown
+				user-select: auto;
+				cursor: auto;
 
-				&.shown
-					animation-name: "showCard%s" % i;
+			// Effet "main" de cartes
+			nCol = 4;                      // Nombre de colonnes
+			angle = 40deg;                 // Amplitude de l'angle de la main
+			startAngle = -1 * angle / 2;   // Angle de départ de la main
+			offset = 30rem;                // Amplitude du décalage entre les cartes
+			startOffset = -1 * offset / 2; // Décalage de départ des cartes 
+			
+			for i in (0..3)
 
-				&.hiding
-					animation-name: "hideCard%s" % i;
-				
-				@keyframes showCard{i}
-					0%
-						transform: rotate(rotation) translateX(translation) translateY(0px);
-						z-index: 0;
-						box-shadow: smallShadow;
-					50%
-						transform: rotate(rotation) translateX(translation) translateY(-70%);
-						box-shadow: smallShadow;
-						z-index: 2;
-					100%
-						transform: rotate(0deg) translateX(0px) translateY(0px);
-						box-shadow: bigShadow;
-						z-index: 2;
-				
-				@keyframes hideCard{i}
-					0%
-						transform: rotate(0deg) translateX(0px) translateY(0px);
-						box-shadow: bigShadow;
-						z-index: 2;
-					50%
-						transform: rotate(rotation) translateX(translation) translateY(-70%);
-						box-shadow: smallShadow;
-						z-index: 0;
-					100%
-						transform: rotate(rotation) translateX(translation) translateY(0px);
-						box-shadow: smallShadow;
-						z-index: 0;
+				&:nth-child({i+1})
+					left1 = (i - nCol/2) * -100%; // Aligner la gauche avec le centre du parent (≠ centre de la zone)
+					left2 = -1 * w / 2; // Aligner le centre avec la gauche de la zone
+					left: "calc(%s + %s)" % (left1 left2)
+					rotation = startAngle + i / (nCol - 1) * angle;
+					translation = startOffset + i / (nCol - 1) * offset;
+					transform: rotate(rotation) translateX(translation);
 
+					&.shown
+						animation-name: "showCard%s" % i;
 
+					&.hiding
+						animation-name: "hideCard%s" % i;
+					
+					@keyframes showCard{i}
+						0%
+							transform: rotate(rotation) translateX(translation);
+							z-index: 0;
+							box-shadow: smallShadow;
+						50%
+							transform: rotate(rotation) translateX(translation) translateY(-70%);
+							box-shadow: smallShadow;
+							z-index: 2;
+						100%
+							transform: rotate(0deg) translateX(0px);
+							box-shadow: bigShadow;
+							z-index: 2;
+					
+					@keyframes hideCard{i}
+						0%
+							transform: rotate(0deg) translateX(0px);
+							box-shadow: bigShadow;
+							z-index: 2;
+						50%
+							transform: rotate(rotation) translateX(translation) translateY(-70%);
+							box-shadow: smallShadow;
+							z-index: 0;
+						100%
+							transform: rotate(rotation) translateX(translation);
+							box-shadow: smallShadow;
+							z-index: 0;
 
 #freelance
 	// rien

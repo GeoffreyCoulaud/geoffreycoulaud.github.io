@@ -15,9 +15,14 @@ function animateCards(){
 	for (let i = 0; i < cards.length; i++){
 		const card = cards[i];
 		card.addEventListener("click", function(event){
+			// Ne rien faire si on n'est pas en vue éventail
+			const elem = event.currentTarget;
+			const css = window.getComputedStyle(elem);
+			const transform = css.getPropertyValue("transform"); 
+			if (transform === "none") return;
+			// Sinon, afficher celui cliqué
 			event.stopPropagation();
 			hideShown();
-			const elem = event.currentTarget;
 			elem.classList.remove("hiding");
 			elem.classList.add("shown");
 		});
