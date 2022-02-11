@@ -26,11 +26,10 @@ body
 	@media (min-width: 40rem)
 		font-size: 1em;
 
-h1, h2, strong
+h1, h2
 	font-family: "Bebas Neue", sans-serif;
 
 #wrapper
-	scroll-behavior: smooth;
 	perspective: 100px;
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -117,14 +116,11 @@ h1, h2, strong
 			font-weight: 400;
 		
 		p
-			max-width: 50em;
 			font-size: 1.2em;
-			margin: 1rem 0px;
 
 	.title-wrapper 
 		
 		&>*
-			writing-mode: horizontal-tb;
 			text-align: center;
 			font-size: 3em;
 			margin: 0px;
@@ -172,12 +168,11 @@ h1, h2, strong
 	
 	grid-template-rows: repeat(4, max-content);
 	grid-template-columns: 1fr;
-	margin-bottom: 5rem;
+	margin-bottom: 10rem;
 	display: grid;
 	gap: 2rem;
 
 	.card
-
 		padding: 2rem 2rem 4rem 2rem;
 		box-sizing: border-box;
 		border-radius: 1rem;
@@ -188,6 +183,7 @@ h1, h2, strong
 	/*
 		Configuration : Tablette, ordinateur (classe, les cartes sont affichées en éventail et sont interactives)
 		Seuil : L'éventail nécessite beaucoup de largeur, c'est assez pour qu'il ne se superpose pas avec le.s titre.s
+		? Peut-être qu'un scroll horizontal serait cool
 	*/
 	@media (min-width: 80rem)
 		grid-template-columns: repeat(4, 25%);
@@ -264,7 +260,83 @@ h1, h2, strong
 							z-index: 0;
 
 #freelance
-	// rien
+
+	.card
+		width: 100%;
+
+		&>*
+			margin-bottom: 2rem;
+
+	/*
+		Configuration : Mobiles larges, tablette, ordinateur
+		Seuil : On a assez de largeur pour faire coexister l'illustration et le propos
+	*/
+	@media (min-width: 60rem)
+		.card
+			justify-content: center;
+			display: flex;
+			gap: 4rem;
+
+			article
+				margin-bottom: 0px;
+				text-align: right;
+				width: 30rem;
+
+			aside
+				width 22rem;
+
+.sms-conversation
+	messageRadius = 1.6em;
+
+	font-family: "Roboto", Arial, Helvetica, sans-serif;
+	box-shadow: 0px 0px 1rem rgba(0,0,0,0.2);
+	background-color: white;
+	box-sizing: border-box;
+	border-radius: 1rem;
+	font-size: 0.8em;
+	padding: 1rem;
+
+	.msg-group
+		margin-bottom: 1em;
+		width: 100%;
+
+		.msg
+			width: fit-content;
+			max-width: 75%;
+			margin: 0.2em;
+			padding: 1em;
+
+		&:last-child
+			margin-bottom: 0px;
+
+		// Messages du client, à droite
+		&.client .msg
+			border-bottom-left-radius: messageRadius;
+			border-top-left-radius: messageRadius;
+			background-color: #2abd16;
+			margin-left: auto;
+			color: white;
+			
+			// Arrondir les angles extérieurs des messages de début et fin
+			&:last-child
+				border-bottom-right-radius: messageRadius;
+			
+			&:first-child
+				border-top-right-radius: messageRadius;
+
+		// Messages de Geoffrey, à gauche
+		&.geoffrey .msg
+			border-bottom-right-radius: messageRadius;
+			border-top-right-radius: messageRadius;
+			background-color: #e7e7e9;
+			color: black;
+			
+			// Même but qu'au dessus
+			&:last-child
+				border-bottom-left-radius: messageRadius;
+
+			&:first-child
+				border-top-left-radius: messageRadius;
 
 #agile
 	// rien
