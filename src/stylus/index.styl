@@ -257,13 +257,13 @@ h1, h2
 							z-index: 0;
 
 #freelance
-	display: grid;
 	grid-template-columns: 1fr;
 	grid-template-rows: repeat(3, max-content);
 	grid-template-areas:\
 		"availability-article"\
 		"one-person-article  "\
 		"quality-article     ";
+	display: grid;
 	gap: 2rem;
 
 	.blurred
@@ -287,8 +287,8 @@ h1, h2
 	*/
 	@media (min-width: 60rem)
 		// Note : Il n'y a pas de quality-aside, ne pas oublier de le rajouter si besoin.
-		grid-template-columns: 2fr 1fr;
 		grid-template-rows: repeat(4, max-content);
+		grid-template-columns: 2fr 1fr;
 		grid-template-areas:\
 			"availability-article availability-aside"\
 			"one-person-article   availability-aside"\
@@ -418,7 +418,6 @@ h1, h2
 	@media (min-width: 80rem)
 		grid-template-columns: 35rem 22rem;
 		width: fit-content;
-		margin: 0px auto;
 
 #agile
 	// rien
