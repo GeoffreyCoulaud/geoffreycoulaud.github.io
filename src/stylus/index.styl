@@ -122,7 +122,7 @@ h1, h2
 		
 		&>*
 			text-align: center;
-			font-size: 3em;
+			font-size: 4em;
 			margin: 0px;
 
 	/*
@@ -165,20 +165,10 @@ h1, h2
 #developper
 	bigShadow = 0px 0px 20rem 3rem rgba(0,0,0,0.5);
 	smallShadow = 0px 0px 1rem rgba(0,0,0,0.2);
-	
 	grid-template-rows: repeat(4, max-content);
 	grid-template-columns: 1fr;
-	margin-bottom: 10rem;
 	display: grid;
 	gap: 2rem;
-
-	.card
-		padding: 2rem 2rem 4rem 2rem;
-		box-sizing: border-box;
-		border-radius: 1rem;
-		background-color: white;
-		box-shadow: smallShadow;
-		color: black;
 
 	/*
 		Configuration : Tablette, ordinateur (classe, les cartes sont affichées en éventail et sont interactives)
@@ -186,6 +176,7 @@ h1, h2
 		? Peut-être qu'un scroll horizontal serait cool
 	*/
 	@media (min-width: 80rem)
+		margin-bottom: 10rem;
 		grid-template-columns: repeat(4, 25%);
 		grid-template-rows: max-content;
 		padding: 5rem 0px;
@@ -195,12 +186,18 @@ h1, h2
 			w = 25rem; // Largeur réelle d'une carte
 			transform-origin: bottom center;
 			animation-timing-function: ease;
+			padding: 2rem 2rem 4rem 2rem;
 			animation-iteration-count: 1;
 			animation-fill-mode: both;
+			background-color: white;
 			animation-duration: 0.5s;
+			box-shadow: smallShadow;
+			box-sizing: border-box;
+			border-radius: 1rem;
 			position: relative;
 			user-select: none;
 			cursor: pointer;
+			color: black;
 			bottom: 4rem;
 			width: w;
 
@@ -260,83 +257,168 @@ h1, h2
 							z-index: 0;
 
 #freelance
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: repeat(3, max-content);
+	grid-template-areas:\
+		"availability-article"\
+		"one-person-article  "\
+		"quality-article     ";
+	gap: 2rem;
 
-	.card
-		width: 100%;
+	.blurred
+		filter: blur(1px);
 
-		&>*
-			margin-bottom: 2rem;
+	aside
+		display: none;
+
+	for subsection in (availability one-person quality)
+		for tag in (article aside)
+			{tag}.{subsection}
+				grid-area: "%s-%s" % (subsection tag);
+
+	article
+			p
+				margin-bottom: 0px;
 
 	/*
-		Configuration : Mobiles larges, tablette, ordinateur
-		Seuil : On a assez de largeur pour faire coexister l'illustration et le propos
+		Configuration : Tablette. Mise en page sophistiquée.
+		Seuil : Les deux colonnes demandent beaucoup de largeur.
 	*/
 	@media (min-width: 60rem)
-		.card
-			justify-content: center;
-			display: flex;
-			gap: 4rem;
+		// Note : Il n'y a pas de quality-aside, ne pas oublier de le rajouter si besoin.
+		grid-template-columns: 2fr 1fr;
+		grid-template-rows: repeat(4, max-content);
+		grid-template-areas:\
+			"availability-article availability-aside"\
+			"one-person-article   availability-aside"\
+			"one-person-aside     one-person-aside  "\
+			"quality-article      quality-article   ";
 
-			article
-				margin-bottom: 0px;
-				text-align: right;
-				width: 30rem;
+		aside
+			display: block;
 
-			aside
-				width 22rem;
+		article.availability
+			text-align: right;
 
-.sms-conversation
-	messageRadius = 1.6em;
-
-	font-family: "Roboto", Arial, Helvetica, sans-serif;
-	box-shadow: 0px 0px 1rem rgba(0,0,0,0.2);
-	background-color: white;
-	box-sizing: border-box;
-	border-radius: 1rem;
-	font-size: 0.8em;
-	padding: 1rem;
-
-	.msg-group
-		margin-bottom: 1em;
-		width: 100%;
-
-		.msg
+		aside.one-person
+			grid-template-columns: 6rem max-content max-content 6rem;
+			box-shadow: 0px 0px 1rem rgba(0,0,0,0.2);
+			border-radius: 1rem;
+			grid-template-rows: repeat(2, 6rem);
+			grid-template-areas:\
+				"_start arrows end2 .   "\
+				"_start arrows path end1";
+			background-color: white;
+			box-sizing: border-box;
 			width: fit-content;
-			max-width: 75%;
-			margin: 0.2em;
-			padding: 1em;
+			user-select: none;
+			column-gap: 2rem;
+			row-gap: 1rem;
+			display: grid;
+			padding: 2rem;
 
-		&:last-child
-			margin-bottom: 0px;
+			for subsection in (_start arrows path end1 end2)
+				.{subsection}
+					grid-area: "%s" % subsection;
 
-		// Messages du client, à droite
-		&.client .msg
-			border-bottom-left-radius: messageRadius;
-			border-top-left-radius: messageRadius;
-			background-color: #2abd16;
-			margin-left: auto;
-			color: white;
+			&>*
+				margin-bottom: auto;
+				margin-top: auto;
 			
-			// Arrondir les angles extérieurs des messages de début et fin
-			&:last-child
-				border-bottom-right-radius: messageRadius;
-			
-			&:first-child
-				border-top-right-radius: messageRadius;
+			.arrows
+				height: 6.5rem;
 
-		// Messages de Geoffrey, à gauche
-		&.geoffrey .msg
-			border-bottom-right-radius: messageRadius;
-			border-top-right-radius: messageRadius;
-			background-color: #e7e7e9;
-			color: black;
-			
-			// Même but qu'au dessus
-			&:last-child
-				border-bottom-left-radius: messageRadius;
+			.path
+				margin-left: 1.75rem;
+				height: 3.5rem;
 
-			&:first-child
-				border-top-left-radius: messageRadius;
+			.card
+				background-color: white;
+				border-radius: 1rem;
+				position: relative;
+				height: 6rem;
+				width: 6rem;
+
+				&._start
+					background-color: #2abd16;
+				
+				&.end1
+					background-color: #f7e6e2;
+				
+				&.end2
+					background-color: #e7e7e9;
+
+				p
+					transform: translate(-50%, -50%);
+					vertical-align: middle;
+					display: inline-block;
+					position: absolute;
+					font-size: 3rem;
+					margin: 0px;
+					left: 50%;
+					top: 50%;
+
+		.sms-conversation
+			messageRadius = 1.6em;
+			font-family: "Roboto", Arial, Helvetica, sans-serif;
+			box-shadow: 0px 0px 1rem rgba(0,0,0,0.2);
+			background-color: white;
+			box-sizing: border-box;
+			border-radius: 1rem;
+			font-size: 0.8em;
+			padding: 1rem;
+
+			.group
+				margin-bottom: 1em;
+				width: 100%;
+
+				.msg
+					width: fit-content;
+					max-width: 75%;
+					margin: 0.2em;
+					padding: 1em;
+
+				&:last-child
+					margin-bottom: 0px;
+
+				// Messages du client, à droite
+				&.client .msg
+					border-bottom-left-radius: messageRadius;
+					border-top-left-radius: messageRadius;
+					background-color: #2abd16;
+					margin-left: auto;
+					color: white;
+					
+					// Arrondir les angles extérieurs des messages de début et fin
+					&:last-child
+						border-bottom-right-radius: messageRadius;
+					
+					&:first-child
+						border-top-right-radius: messageRadius;
+
+				// Messages de Geoffrey, à gauche
+				&.geoffrey .msg
+					border-bottom-right-radius: messageRadius;
+					border-top-right-radius: messageRadius;
+					background-color: #e7e7e9;
+					color: black;
+					
+					// Même but qu'au dessus
+					&:last-child
+						border-bottom-left-radius: messageRadius;
+
+					&:first-child
+						border-top-left-radius: messageRadius;
+
+	/*
+		Configuration : Tablette, ordinateur. Mise en page sophistiquée.
+		Seuil : Les deux colonnes demandent beaucoup de largeur.
+	*/
+	@media (min-width: 80rem)
+		grid-template-columns: 35rem 22rem;
+		width: fit-content;
+		margin: 0px auto;
 
 #agile
 	// rien
