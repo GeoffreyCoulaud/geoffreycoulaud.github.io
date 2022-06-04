@@ -16,6 +16,9 @@
 	- Pourquoi ce seuil
 */
 
+smallShadow = 0px 0px 1rem rgba(0,0,0,0.2);
+bigShadow = 0px 0px 20rem 3rem rgba(0,0,0,0.5);
+
 body
 	font-family: "Zen Kaku Gothic Antique", Arial, Helvetica, sans-serif;
 	background-color: #3a73cc;
@@ -44,7 +47,7 @@ h1, h2
 	height: 100vh;
 
 	& > *
-		filter: drop-shadow(0px 0px 1rem rgba(0,0,0,0.2));
+		filter: drop-shadow(smallShadow);
 		transform: translateX(-50%);
 		position: absolute;
 		left: 50%;
@@ -163,8 +166,6 @@ h1, h2
 			"t1 t2 t3 content3 . . .";
 
 #developper
-	bigShadow = 0px 0px 20rem 3rem rgba(0,0,0,0.5);
-	smallShadow = 0px 0px 1rem rgba(0,0,0,0.2);
 	grid-template-rows: repeat(4, max-content);
 	grid-template-columns: 1fr;
 	display: grid;
@@ -303,14 +304,14 @@ h1, h2
 
 		aside.one-person
 			grid-template-columns: 6rem max-content max-content 6rem;
-			box-shadow: 0px 0px 1rem rgba(0,0,0,0.2);
-			border-radius: 1rem;
 			grid-template-rows: repeat(2, 6rem);
 			grid-template-areas:\
 				"_start arrows end2 .   "\
 				"_start arrows path end1";
 			background-color: white;
+			box-shadow: smallShadow;
 			box-sizing: border-box;
+			border-radius: 1rem;
 			width: fit-content;
 			user-select: none;
 			column-gap: 2rem;
@@ -362,8 +363,8 @@ h1, h2
 		.sms-conversation
 			messageRadius = 1.6em;
 			font-family: "Roboto", Arial, Helvetica, sans-serif;
-			box-shadow: 0px 0px 1rem rgba(0,0,0,0.2);
 			background-color: white;
+			box-shadow: smallShadow;
 			box-sizing: border-box;
 			border-radius: 1rem;
 			font-size: 0.8em;
@@ -420,7 +421,40 @@ h1, h2
 		width: fit-content;
 
 #agile
-	// rien
+	grid-template-rows: repeat(2, max-content);
+	grid-template-columns: max-content 1fr;
+	grid-template-areas:\
+		".              transparency "\
+		"chat-services  reachable    ";
+	display: grid;
+	gap: 2rem;
+
+	for subsection in (transparency reachable chat-services)
+		.{subsection}
+			grid-area: subsection;
+	
+	article
+		&>*:last-child
+			margin-bottom: 0px;
+
+	aside.chat-services
+		grid-template-columns: repeat(3, max-content);
+		grid-template-rows: repeat(2, max-content);
+		display: grid;
+		gap: 2rem;
+
+		&>*
+			background-color: white;
+			box-shadow: smallShadow;
+			justify-content: center;
+			border-radius: 1rem;
+			align-items: center;
+			padding: 2rem;
+			display: flex;
+
+			img
+				filter: drop-shadow(0px 0px 0.2rem rgba(0,0,0,0.2))
+				width: 4rem;
 
 section.test
 	height: 100vh;
