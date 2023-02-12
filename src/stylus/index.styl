@@ -1,0 +1,496 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique&display=swap');
+
+/*
+	--- Philosophie du design ---
+
+	Tout au long de ce fichier, le design par défaut est la version mobile.
+	Les media queries (@media) changent le style pour une amélioration progressive.
+	J'applique la technique du "mobile first" parce qu'il est plus simple 
+	d'étendre un design compact que de compacter un design complexe.
+
+	Dans l'idéal, toutes les media queries sont commentées pour expliquer :
+	- Quel est le nom de cette configuration
+	- Pourquoi ce seuil
+*/
+
+smallShadow = 0px 0px 1rem rgba(0,0,0,0.2);
+bigShadow = 0px 0px 20rem 3rem rgba(0,0,0,0.5);
+
+body
+	font-family: "Zen Kaku Gothic Antique", Arial, Helvetica, sans-serif;
+	background-color: #3a73cc;
+	font-size: 0.75rem;
+	color: white;
+	margin: 0px;
+
+	@media (min-width: 40rem)
+		font-size: 1em;
+
+h1, h2
+	font-family: "Bebas Neue", sans-serif;
+
+#wrapper
+	perspective: 100px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	height: 100vh;
+	width: 100%;
+
+#landing
+	transform-style: preserve-3d;
+	margin-bottom: 10rem;
+	position: relative;
+	font-size: 5em;
+	height: 100vh;
+
+	& > *
+		filter: drop-shadow(smallShadow);
+		transform: translateX(-50%);
+		position: absolute;
+		left: 50%;
+
+	h1
+		text-transform: uppercase;
+		line-height: 0.8em;
+		text-align: center;
+		font-size: 1em;
+		margin: 0px;
+		top: 1em;
+
+	img
+		width: 10rem;
+		bottom: 1em;
+
+	/*
+		Configuration : Mobiles larges, tablettes, ordinateurs
+		Seuil : Correspond à la largeur minimale pour écrire "Geoffrey".
+	*/
+	@media (min-width: 33rem)
+		font-size: 10rem;
+		height: 60rem;
+
+		h1
+			transform: translate(-50%, -50%) translateZ(-20px) scale(1.2);
+			line-height: 1.5em;
+			left: 50%;
+			top: 50%;
+
+		img
+			transform: translate(-50%, -50%);
+			width: 20rem;
+			top: 50%;
+
+#main
+	grid-template-columns: 100%;
+	grid-template-rows: repeat(6, max-content);
+	grid-template-areas:\
+		"t1"\
+		"content1"\
+		"t2"\
+		"content2"\
+		"t3"\
+		"content3";
+	box-sizing: border-box;
+	padding: 0px 2rem;
+	column-gap: 2rem;
+	row-gap: 2rem;
+	display: grid;
+	width: 100%;
+
+	&>*
+		width: 100%;
+
+	for i in (1..3)
+		.content:nth-of-type({i})
+			grid-area: "content%s" % i;
+
+		.title-wrapper:nth-of-type({i})
+			grid-area: "t%s" % i;
+
+	.content
+
+		h3
+			font-family: "Abril Fatface", 'Times New Roman', Times, serif;
+			font-size: 2em;
+			margin: 0px 0px 1rem 0px;
+			font-weight: 400;
+		
+		p
+			font-size: 1.2em;
+
+	.title-wrapper 
+		
+		&>*
+			text-align: center;
+			font-size: 4em;
+			margin: 0px;
+
+	/*
+		Configuration : Mobiles larges (une colonne de titres verticaux)
+		Seuil : On a assez d'espace pour faire coexister un titre verticalement en plus du contenu.
+	*/
+	@media (min-width: 30rem)
+		grid-template-columns: 4.6rem calc(100% - 4.6rem - 2rem);
+		grid-template-rows: repeat(3, max-content);
+		grid-template-areas:\
+			"t1 content1"\
+			"t2 content2"\
+			"t3 content3";
+		row-gap: 4rem;
+
+		.title-wrapper
+			position: relative;
+			font-size: 5em;
+
+			&>*
+				writing-mode: vertical-lr;
+				transform: scale(-1);
+				text-align: right;
+				position: sticky;
+				font-size: 5rem;
+				top: 3rem;
+
+	/*
+		Configuration : Tablettes, ordinateurs (trois colonnes de titres verticaux)
+		Seuil : On a de l'espace à foison en largeur, donc on peut afficher les trois titres verticaux et obtenir un effet sympa.
+	*/
+	@media (min-width: 85rem)
+		grid-template-columns: repeat(3, 4.6rem) calc(100% - 4.6rem * 6 - 2rem * 6) repeat(3, 4.6rem);
+		grid-template-rows: repeat(3, max-content);
+		grid-template-areas:\
+			"t1 .  .  content1 . . ."\
+			"t1 t2 .  content2 . . ."\
+			"t1 t2 t3 content3 . . .";
+
+#developper
+	grid-template-rows: repeat(4, max-content);
+	grid-template-columns: 1fr;
+	display: grid;
+	gap: 2rem;
+
+	/*
+		Configuration : Tablette, ordinateur (classe, les cartes sont affichées en éventail et sont interactives)
+		Seuil : L'éventail nécessite beaucoup de largeur, c'est assez pour qu'il ne se superpose pas avec le.s titre.s
+		? Peut-être qu'un scroll horizontal serait cool
+	*/
+	@media (min-width: 80rem)
+		margin-bottom: 10rem;
+		grid-template-columns: repeat(4, 25%);
+		grid-template-rows: max-content;
+		padding: 5rem 0px;
+		gap: 0px;
+
+		.card
+			w = 25rem; // Largeur réelle d'une carte
+			transform-origin: bottom center;
+			animation-timing-function: ease;
+			padding: 2rem 2rem 4rem 2rem;
+			animation-iteration-count: 1;
+			animation-fill-mode: both;
+			background-color: white;
+			animation-duration: 0.5s;
+			box-shadow: smallShadow;
+			box-sizing: border-box;
+			border-radius: 1rem;
+			position: relative;
+			user-select: none;
+			cursor: pointer;
+			color: black;
+			bottom: 4rem;
+			width: w;
+
+			&.shown
+				user-select: auto;
+				cursor: auto;
+
+			// Effet "main" de cartes
+			nCol = 4;                      // Nombre de colonnes
+			angle = 40deg;                 // Amplitude de l'angle de la main
+			startAngle = -1 * angle / 2;   // Angle de départ de la main
+			offset = 30rem;                // Amplitude du décalage entre les cartes
+			startOffset = -1 * offset / 2; // Décalage de départ des cartes 
+			
+			for i in (0..3)
+
+				&:nth-child({i+1})
+					left1 = (i - nCol/2) * -100%; // Aligner la gauche avec le centre du parent (≠ centre de la zone)
+					left2 = -1 * w / 2; // Aligner le centre avec la gauche de la zone
+					left: "calc(%s + %s)" % (left1 left2)
+					rotation = startAngle + i / (nCol - 1) * angle;
+					translation = startOffset + i / (nCol - 1) * offset;
+					transform: rotate(rotation) translateX(translation);
+
+					&.shown
+						animation-name: "showCard%s" % i;
+
+					&.hiding
+						animation-name: "hideCard%s" % i;
+					
+					@keyframes showCard{i}
+						0%
+							transform: rotate(rotation) translateX(translation);
+							z-index: 0;
+							box-shadow: smallShadow;
+						50%
+							transform: rotate(rotation) translateX(translation) translateY(-70%);
+							box-shadow: smallShadow;
+							z-index: 2;
+						100%
+							transform: rotate(0deg) translateX(0px);
+							box-shadow: bigShadow;
+							z-index: 2;
+					
+					@keyframes hideCard{i}
+						0%
+							transform: rotate(0deg) translateX(0px);
+							box-shadow: bigShadow;
+							z-index: 2;
+						50%
+							transform: rotate(rotation) translateX(translation) translateY(-70%);
+							box-shadow: smallShadow;
+							z-index: 0;
+						100%
+							transform: rotate(rotation) translateX(translation);
+							box-shadow: smallShadow;
+							z-index: 0;
+
+#freelance
+	grid-template-columns: 1fr;
+	grid-template-rows: repeat(3, max-content);
+	grid-template-areas:\
+		"availability-article"\
+		"one-person-article  "\
+		"quality-article     ";
+	display: grid;
+	gap: 2rem;
+
+	.blurred
+		filter: blur(1px);
+
+	aside
+		display: none;
+
+	for subsection in (availability one-person quality)
+		for tag in (article aside)
+			{tag}.{subsection}
+				grid-area: "%s-%s" % (subsection tag);
+
+	article
+			p
+				margin-bottom: 0px;
+
+	/*
+		Configuration : Tablette. Mise en page sophistiquée.
+		Seuil : Les deux colonnes demandent beaucoup de largeur.
+	*/
+	@media (min-width: 60rem)
+		// Note : Il n'y a pas de quality-aside, ne pas oublier de le rajouter si besoin.
+		grid-template-rows: repeat(4, max-content);
+		grid-template-columns: 2fr 1fr;
+		grid-template-areas:\
+			"availability-article availability-aside"\
+			"one-person-article   availability-aside"\
+			"one-person-aside     one-person-aside  "\
+			"quality-article      quality-article   ";
+
+		aside
+			display: block;
+
+		article.availability
+			text-align: right;
+
+		aside.one-person
+			grid-template-columns: 6rem max-content max-content 6rem;
+			grid-template-rows: repeat(2, 6rem);
+			grid-template-areas:\
+				"_start arrows end2 .   "\
+				"_start arrows path end1";
+			background-color: white;
+			box-shadow: smallShadow;
+			box-sizing: border-box;
+			border-radius: 1rem;
+			width: fit-content;
+			user-select: none;
+			column-gap: 2rem;
+			row-gap: 1rem;
+			display: grid;
+			padding: 2rem;
+
+			for subsection in (_start arrows path end1 end2)
+				.{subsection}
+					grid-area: "%s" % subsection;
+
+			&>*
+				margin-bottom: auto;
+				margin-top: auto;
+			
+			.arrows
+				height: 6.5rem;
+
+			.path
+				margin-left: 1.75rem;
+				height: 3.5rem;
+
+			.card
+				background-color: white;
+				border-radius: 1rem;
+				position: relative;
+				height: 6rem;
+				width: 6rem;
+
+				&._start
+					background-color: #2abd16;
+				
+				&.end1
+					background-color: #f7e6e2;
+				
+				&.end2
+					background-color: #e7e7e9;
+
+				p
+					transform: translate(-50%, -50%);
+					vertical-align: middle;
+					display: inline-block;
+					position: absolute;
+					font-size: 3rem;
+					margin: 0px;
+					left: 50%;
+					top: 50%;
+
+		.sms-conversation
+			messageRadius = 1.6em;
+			font-family: "Roboto", Arial, Helvetica, sans-serif;
+			background-color: white;
+			box-shadow: smallShadow;
+			box-sizing: border-box;
+			border-radius: 1rem;
+			font-size: 0.8em;
+			padding: 1rem;
+
+			.group
+				margin-bottom: 1em;
+				width: 100%;
+
+				.msg
+					width: fit-content;
+					max-width: 75%;
+					margin: 0.2em;
+					padding: 1em;
+
+				&:last-child
+					margin-bottom: 0px;
+
+				// Messages du client, à droite
+				&.client .msg
+					border-bottom-left-radius: messageRadius;
+					border-top-left-radius: messageRadius;
+					background-color: #2abd16;
+					margin-left: auto;
+					color: white;
+					
+					// Arrondir les angles extérieurs des messages de début et fin
+					&:last-child
+						border-bottom-right-radius: messageRadius;
+					
+					&:first-child
+						border-top-right-radius: messageRadius;
+
+				// Messages de Geoffrey, à gauche
+				&.geoffrey .msg
+					border-bottom-right-radius: messageRadius;
+					border-top-right-radius: messageRadius;
+					background-color: #e7e7e9;
+					color: black;
+					
+					// Même but qu'au dessus
+					&:last-child
+						border-bottom-left-radius: messageRadius;
+
+					&:first-child
+						border-top-left-radius: messageRadius;
+
+	/*
+		Configuration : Tablette, ordinateur. Mise en page sophistiquée.
+		Seuil : Les deux colonnes demandent beaucoup de largeur.
+	*/
+	@media (min-width: 80rem)
+		grid-template-columns: 35rem 22rem;
+		width: fit-content;
+
+#agile
+	grid-template-rows: repeat(2, max-content);
+	grid-template-columns: 1fr;
+	grid-template-areas:\
+		"transparency "\
+		"reachable";
+	display: grid;
+	gap: 2rem;
+
+	for subsection in (transparency reachable chat-services)
+		.{subsection}
+			grid-area: subsection;
+	
+	article
+		&>*:last-child
+			margin-bottom: 0px;
+
+	aside.chat-services
+		display: none;
+
+		&>*
+			background-color: white;
+			box-shadow: smallShadow;
+			justify-content: center;
+			border-radius: 1rem;
+			align-items: center;
+			padding: 2rem;
+			display: flex;
+
+			img
+				filter: drop-shadow(0px 0px 0.2rem rgba(0,0,0,0.2))
+				width: 4rem;
+
+	/*
+		Configuration : PC
+	*/
+	@media (min-width: 60rem)
+		grid-template-rows: repeat(2, max-content);
+		grid-template-columns: max-content 1fr;
+		grid-template-areas:\
+			"chat-services transparency "\
+			"chat-services reachable    ";
+
+		aside.chat-services
+			display: grid;
+			grid-template-columns: repeat(3, max-content);
+			grid-template-rows: repeat(2, max-content);
+			margin: 0px auto;
+			gap: 2rem;
+
+#contact
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding-bottom: 50vh;
+	padding-top: 6rem;
+
+	h2
+		font-size: 4em;
+		margin-bottom: 0.25em;
+
+	a
+		font-size: 2em;
+		color: inherit;
+
+	/*
+		Configuration : PC
+		Seuil : Identique au reste
+	*/
+	@media (min-width: 60rem)
+		box-sizing: border-box;
+		min-height: 100vh;
+		padding-bottom: 50vh;
