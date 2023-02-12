@@ -422,10 +422,10 @@ h1, h2
 
 #agile
 	grid-template-rows: repeat(2, max-content);
-	grid-template-columns: max-content 1fr;
+	grid-template-columns: 1fr;
 	grid-template-areas:\
-		".              transparency "\
-		"chat-services  reachable    ";
+		"transparency "\
+		"reachable";
 	display: grid;
 	gap: 2rem;
 
@@ -438,10 +438,7 @@ h1, h2
 			margin-bottom: 0px;
 
 	aside.chat-services
-		grid-template-columns: repeat(3, max-content);
-		grid-template-rows: repeat(2, max-content);
-		display: grid;
-		gap: 2rem;
+		display: none;
 
 		&>*
 			background-color: white;
@@ -456,5 +453,44 @@ h1, h2
 				filter: drop-shadow(0px 0px 0.2rem rgba(0,0,0,0.2))
 				width: 4rem;
 
-section.test
-	height: 100vh;
+	/*
+		Configuration : PC
+	*/
+	@media (min-width: 60rem)
+		grid-template-rows: repeat(2, max-content);
+		grid-template-columns: max-content 1fr;
+		grid-template-areas:\
+			"chat-services transparency "\
+			"chat-services reachable    ";
+
+		aside.chat-services
+			display: grid;
+			grid-template-columns: repeat(3, max-content);
+			grid-template-rows: repeat(2, max-content);
+			margin: 0px auto;
+			gap: 2rem;
+
+#contact
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding-bottom: 50vh;
+	padding-top: 6rem;
+
+	h2
+		font-size: 4em;
+		margin-bottom: 0.25em;
+
+	a
+		font-size: 2em;
+		color: inherit;
+
+	/*
+		Configuration : PC
+		Seuil : Identique au reste
+	*/
+	@media (min-width: 60rem)
+		box-sizing: border-box;
+		min-height: 100vh;
+		padding-bottom: 50vh;
