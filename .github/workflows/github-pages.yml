@@ -16,7 +16,7 @@ jobs:
           mkdir dist/css dist/js
           cp -r src/js dist/js
           cp -r assets/* dist
-          stylus src/stylus -o dist/css -c --include-css
+          npx stylus src/stylus -o dist/css -c --include-css
       - name: Upload artifacts
         uses: actions/upload-pages-artifact@v3
         with:
