@@ -12,11 +12,23 @@ jobs:
         run: npm install
       - name: Build distributables
         run: |
+          # --- Create dist directory, containing the final website structure
           mkdir dist
-          mkdir dist/css dist/js
-          cp -r src/js dist/js
-          cp -r assets/* dist
-          npx stylus src/stylus -o dist/css -c --include-css
+
+          # --- Copy base HTML + favicon
+          cp assets/pages/index.html dist
+          cp assets/images/favicon.ico dist
+
+          # --- Copy assets
+          cp -r assets dist
+
+          # --- Copy JS files (no build step for now)
+          mkdir dist/build/js
+          cp -r src/js dist/build/js
+
+          # --- Compile Stylus to CSS
+          npx stylus src/stylus -o dist/build/css -c --include-css
+
       - name: Upload artifacts
         uses: actions/upload-pages-artifact@v3
         with:
