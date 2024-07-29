@@ -28,7 +28,6 @@ jobs:
           cp -r assets dist
 
           # --- Copy JS files (no build step for now)
-          mkdir dist/build/js
           cp -r src/js dist/build/js
 
           # --- Compile Stylus to CSS
