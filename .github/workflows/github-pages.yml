@@ -20,7 +20,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          name: dist
+          name: github-pages
           path: dist
   deploy:
     needs: build
