@@ -12,8 +12,13 @@ jobs:
         run: npm install
       - name: Build distributables
         run: |
-          # --- Create dist directory, containing the final website structure
+          # --- Create the website structure
           mkdir dist
+          mkdir dist/assets
+          mkdir dist/assets/images
+          mkdir dist/build
+          mkdir dist/build/css
+          mkdir dist/build/js
 
           # --- Copy base HTML + favicon
           cp assets/pages/index.html dist
