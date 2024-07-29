@@ -1,0 +1,39 @@
+name: learn-github-actions
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up NPM dependencies
+        run: npm install
+      - name: Build distributables
+        run: |
+          mkdir dist
+          mkdir dist/css dist/js
+          cp src/js dist/js
+          cp -r assets/* dist
+          stylus src/stylus -o dist/css -c --include-css
+      - name: Upload artifacts
+        uses: actions/upload-pages-artifact
+        with:
+          artifact-name: dist
+          path: dist
+      - name: Deploy to Github Pages
+        uses: actions/deploy-pages
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-dev": "stylus src/stylus -o dist/css -w -m",
-    "build-prod": "stylus src/stylus -o dist/css -c --include-css"
+    "dev": "stylus src/stylus -o dist/css -w -m"
   },
   "repository": {
     "type": "git",
