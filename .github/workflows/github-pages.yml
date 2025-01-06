@@ -3,22 +3,33 @@ on:
   push:
     branches:
       - main
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
+
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up NPM dependencies
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - name: Install dependencies
         run: npm install
       - name: Build distributables
         run: |
           # --- Create the website structure
           mkdir dist
-          mkdir dist/assets
-          mkdir dist/assets/images
           mkdir dist/build
           mkdir dist/build/css
-          mkdir dist/build/js
 
           # --- Copy base HTML + favicon
           cp assets/pages/index.html dist
@@ -31,13 +42,14 @@ jobs:
           cp -r src/js dist/build/js
 
           # --- Compile Stylus to CSS
-          npx stylus src/stylus -o dist/build/css -c --include-css
+          npx --no-install stylus src/stylus -o dist/build/css -c --include-css
 
       - name: Upload artifacts
         uses: actions/upload-pages-artifact@v3
         with:
           name: github-pages
           path: dist
+
   deploy:
     needs: build
     permissions:
