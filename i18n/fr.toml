@@ -9,3 +9,66 @@ other = "Aussi disponible en"
 
 [backToBlog]
 other = "← Retour au blog"
+
+[home]
+other = "Accueil"
+
+[more]
+other = "Lire la suite..."
+
+[published_on]
+other = "Publié le"
+
+[updated_on]
+other = "Mis à jour le"
+
+[latest_publications]
+other = "Dernières publications"
+
+[edited_by]
+other = "Édité par {{ . }}"
+
+[404_title]
+other = "Page introuvable"
+
+[404_description]
+other = "Désolé, cette URL n'existe pas ou pointe vers quelque chose qui n'existe plus."
+
+[404_back]
+other = "Retourner à l'accueil"
+
+[by]
+other = "par {{ . }}"
+
+[send]
+other = "Envoyer"
+
+[all_publications]
+other = "Toutes les publications"
+
+[publications_tagged]
+other = "Publications taguées \"{{ . }}\""
+
+[table_of_contents]
+other = "Sommaire"
+
+[search_site]
+other = "Rechercher"
+
+[search_no_results]
+other = "Aucun résultat."
+
+[search_results]
+other = "Résultats trouvés :"
+
+[tag_cloud]
+other = "Nuage de tags"
+
+[back_to_top]
+other = "Haut de page"
+
+[back_to_top_label]
+other = "Retour en haut de la page"
+
+[annotate]
+other = "Annoter"

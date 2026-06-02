@@ -2,7 +2,7 @@
 title = "Bonjour, le monde !"
 date = 2026-06-02
 tags = ["meta"]
-aliases = ["/bonjour"]
+aliases = ["/bonjour", "/blog/hello-world"]
 +++
 
 Ceci est mon premier article de blog sur mon nouveau site personnel.
