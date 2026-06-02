@@ -1,6 +1,7 @@
 <style>
 :root {
   --color-bg: oklab(0.93 0.005 0.014);
+  --color-container-bg: oklab(0.99 0.001 0.011);
 }
 body {
   background-color: var(--color-bg);
@@ -13,7 +14,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  background: color-mix(in oklab, var(--color-bg), white 20%);
+  background: var(--color-container-bg);
   box-shadow: 0 0 8px rgba(0,0,0,.04);
   max-width: 52rem;
   margin: 0 auto;
