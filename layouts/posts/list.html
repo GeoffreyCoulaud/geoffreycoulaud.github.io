@@ -32,20 +32,19 @@
     <li>
       <time datetime="{{ $primary.Date.Format "2006-01-02" }}">{{ $primary.Date.Format "2006-01-02" }}</time>
       <a href="{{ $primary.RelPermalink }}">{{ $primary.Title }}</a>
-      {{ range .pages }}
-      <span class="badge">{{ .Language.Lang | upper }}</span>
+      {{ with $primary.Summary }}
+      <p class="summary">{{ . | plainify | truncate 200 }}</p>
       {{ end }}
+      <p class="langs">{{ i18n "languages" }}: {{ range $i, $p := .pages }}{{ if gt $i 0 }}, {{ end }}{{ $p.Language.Lang | upper }}{{ end }}</p>
       {{ with $primary.Params.tags }}
-      <ul class="tags">
+      <p class="tags-list">
         {{ range . }}
-        <li>{{ . }}</li>
+        <span class="tag">{{ . }}</span>
         {{ end }}
-      </ul>
+      </p>
       {{ end }}
     </li>
   {{ end }}
   </ul>
-
-  <p><a href="{{ "posts/index.xml" | relLangURL }}">RSS Feed</a></p>
 </article>
 {{ end }}

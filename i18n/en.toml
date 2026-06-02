@@ -9,3 +9,6 @@ other = "Also available in"
 
 [backToBlog]
 other = "← Back to posts"
+
+[languages]
+other = "Languages"

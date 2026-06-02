@@ -72,3 +72,6 @@ other = "Retour en haut de la page"
 
 [annotate]
 other = "Annoter"
+
+[languages]
+other = "Langues"
