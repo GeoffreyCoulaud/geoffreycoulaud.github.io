@@ -25,7 +25,7 @@ defaultContentLanguageInSubdir = false
   description = "Développeur full stack. Blog, projets, collaborations."
   keywords = ["geoffrey coulaud", "full stack", "développeur", "developer", "blog"]
   tagline = ""
-  footer = " "
+  footer = '<a href="mailto:geoffrey.coulaud@gmail.com">geoffrey.coulaud@gmail.com</a>'
   colorScheme = "red"
   mainSections = ["posts"]
   dateFormat = "2006-01-02"
