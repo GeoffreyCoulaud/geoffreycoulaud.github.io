@@ -42,11 +42,21 @@ for dir in $dirs; do
         echo "ERROR: $dir has mismatched dates: fr=$fr_date en=$en_date"
         errors=$((errors + 1))
     fi
+
+    # Check directory name starts with the post date (YYYY-MM-DD)
+    dirname=$(basename "$dir")
+    if [[ "$dirname" != "$fr_date"* ]]; then
+        echo "ERROR: $dir folder name must start with $fr_date (got '$dirname')"
+        errors=$((errors + 1))
+    fi
 done
 
 if [ "$errors" -gt 0 ]; then
     echo ""
     echo "Commit blocked: $errors post(s) have issues."
-    echo "Both index.fr.md and index.en.md must exist with identical dates."
+    echo "Requirements:"
+    echo "  - Both index.fr.md and index.en.md must exist"
+    echo "  - Both files must have identical date: YYYY-MM-DD"
+    echo "  - Folder name must start with YYYY-MM-DD"
     exit 1
 fi
