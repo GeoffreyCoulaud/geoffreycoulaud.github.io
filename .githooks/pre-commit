@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Only check if content/posts/ has staged changes
+staged=$(git diff --cached --name-only --diff-filter=ACMR -- 'content/posts/')
+if [ -z "$staged" ]; then
+    exit 0
+fi
+
+# Collect unique post directories from staged files
+dirs=$(echo "$staged" | sed -n 's|^\(content/posts/[^/]*\)/.*|\1|p' | sort -u)
+
+errors=0
+for dir in $dirs; do
+    fr="$dir/index.fr.md"
+    en="$dir/index.en.md"
+
+    # Check both translations exist
+    if [ ! -f "$fr" ] || [ ! -f "$en" ]; then
+        echo "ERROR: $dir is missing a translation"
+        echo "  Expected: index.fr.md and index.en.md"
+        if [ -f "$fr" ]; then echo "  Found: index.fr.md (missing index.en.md)"; fi
+        if [ -f "$en" ]; then echo "  Found: index.en.md (missing index.fr.md)"; fi
+        if [ ! -f "$fr" ] && [ ! -f "$en" ]; then echo "  Neither file found"; fi
+        errors=$((errors + 1))
+        continue
+    fi
+
+    # Extract date from frontmatter (TOML: date = YYYY-MM-DD)
+    fr_date=$(grep -m1 '^date\s*=' "$fr" | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
+    en_date=$(grep -m1 '^date\s*=' "$en" | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
+
+    if [ -z "$fr_date" ] || [ -z "$en_date" ]; then
+        echo "ERROR: $dir has a missing or unparseable date field"
+        [ -z "$fr_date" ] && echo "  index.fr.md: no date found"
+        [ -z "$en_date" ] && echo "  index.en.md: no date found"
+        errors=$((errors + 1))
+        continue
+    fi
+
+    if [ "$fr_date" != "$en_date" ]; then
+        echo "ERROR: $dir has mismatched dates: fr=$fr_date en=$en_date"
+        errors=$((errors + 1))
+    fi
+done
+
+if [ "$errors" -gt 0 ]; then
+    echo ""
+    echo "Commit blocked: $errors post(s) have issues."
+    echo "Both index.fr.md and index.en.md must exist with identical dates."
+    exit 1
+fi

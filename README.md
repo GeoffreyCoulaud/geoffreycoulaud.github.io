@@ -2,6 +2,12 @@
 
 Blog personnel généré avec [Hugo](https://gohugo.io/) (v0.121+, extended) et le thème [Ed](https://github.com/sergeyklay/gohugo-theme-ed).
 
+## Configuration après clone
+
+```bash
+git config core.hooksPath .githooks   # active le hook pre-commit
+```
+
 ## Prérequis
 
 - [Hugo](https://gohugo.io/installation/) (extended, >= 0.121.0)
@@ -21,7 +27,7 @@ Chaque article est un **page bundle** : un dossier contenant les fichiers de con
 
 ```
 content/posts/mon-article/
-  index.md        # version française (langue par défaut)
+  index.fr.md     # version française (langue par défaut)
   index.en.md     # traduction anglaise
   capture.png     # image référencée dans l'article
 ```
@@ -32,7 +38,7 @@ content/posts/mon-article/
 mkdir content/posts/<slug>
 ```
 
-### 2. Version française : `index.md`
+### 2. Version française : `index.fr.md`
 
 ```toml
 +++
