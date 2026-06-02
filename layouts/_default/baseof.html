@@ -6,7 +6,7 @@
       itemtype="https://schema.org/WebPage"
       id="top-of-site">
     {{ partial "head.html" . }}
-    <body class="theme-base-{{ site.Params.colorScheme }}">
+    <body class="theme-base-{{ site.Params.colorScheme }} sidebar-overlay">
         <div id="top-of-site-anchor"></div>
         {{ if .Params.toc }}
             {{ partial "sidebar-toc.html" . }}
