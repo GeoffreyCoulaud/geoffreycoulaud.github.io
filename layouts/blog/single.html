@@ -1,0 +1,35 @@
+{{ define "main" }}
+<article>
+  <header>
+    <h1>{{ .Title }}</h1>
+    <span class="badge">{{ .Language.Lang | upper }}</span>
+    {{ with .GitInfo }}
+    <p>Créé le <time datetime="{{ .AuthorDate.Format "2006-01-02" }}">{{ .AuthorDate.Format "2006-01-02" }}</time></p>
+    {{ end }}
+    {{ if ne .Lastmod .Date }}
+    <p>Dernière modification : <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2006-01-02" }}</time></p>
+    {{ end }}
+    {{ with .Params.tags }}
+    <ul class="tags">
+      {{ range . }}
+      <li>{{ . }}</li>
+      {{ end }}
+    </ul>
+    {{ end }}
+    {{ with .Translations }}
+    <p>
+      Aussi disponible en :
+      {{ range . }}
+      <a href="{{ .RelPermalink }}">{{ .Language.LanguageName }}</a>
+      {{ end }}
+    </p>
+    {{ end }}
+  </header>
+  <div class="content">
+    {{ .Content }}
+  </div>
+</article>
+<nav>
+  <a href="{{ "blog/" | relLangURL }}">← Retour au blog</a>
+</nav>
+{{ end }}
