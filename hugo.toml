@@ -7,20 +7,6 @@ enableRobotsTXT = true
 defaultContentLanguage = "fr"
 defaultContentLanguageInSubdir = false
 
-[languages.fr]
-  locale = "fr-FR"
-  direction = "ltr"
-  label = "Français"
-  contentDir = "content"
-  weight = 1
-
-[languages.en]
-  locale = "en-US"
-  direction = "ltr"
-  label = "English"
-  contentDir = "content"
-  weight = 2
-
 [params]
   description = "Développeur full stack. Blog, projets, collaborations."
   keywords = ["geoffrey coulaud", "full stack", "développeur", "developer", "blog"]
@@ -45,19 +31,57 @@ defaultContentLanguageInSubdir = false
   [params.comments]
     enable = false
 
-[menus]
-  [[menus.main]]
+[languages.fr]
+  locale = "fr-FR"
+  direction = "ltr"
+  label = "Français"
+  contentDir = "content"
+  weight = 1
+
+  [[languages.fr.menus.main]]
     identifier = "home"
-    name = "Home"
+    name = "Accueil"
     pageRef = "/"
     weight = 1
-  [[menus.main]]
+  [[languages.fr.menus.main]]
     identifier = "posts"
     name = "Blog"
     pageRef = "/posts"
     weight = 2
+  [[languages.fr.menus.main]]
+    identifier = "search"
+    name = "Recherche"
+    pageRef = "/search"
+    weight = 3
+  [[languages.fr.menus.feeds]]
+    identifier = "rss"
+    name = "RSS"
+    url = "/posts/index.xml"
+    weight = 1
 
-  [[menus.feeds]]
+[languages.en]
+  locale = "en-US"
+  direction = "ltr"
+  label = "English"
+  contentDir = "content"
+  weight = 2
+
+  [[languages.en.menus.main]]
+    identifier = "home"
+    name = "Home"
+    pageRef = "/"
+    weight = 1
+  [[languages.en.menus.main]]
+    identifier = "posts"
+    name = "Blog"
+    pageRef = "/posts"
+    weight = 2
+  [[languages.en.menus.main]]
+    identifier = "search"
+    name = "Search"
+    pageRef = "/search"
+    weight = 3
+  [[languages.en.menus.feeds]]
     identifier = "rss"
     name = "RSS"
     url = "/posts/index.xml"
