@@ -20,6 +20,13 @@
                         <a href="{{ site.Home.RelPermalink }}" title="{{ i18n "home" }}">{{ site.Title }}</a>
                         <br><small>{{ site.Params.tagline }}</small>
                     </h3>
+                    {{ $allLangs := slice . }}
+                    {{ range .Translations }}
+                      {{ $allLangs = $allLangs | append . }}
+                    {{ end }}
+                    {{ if gt (len $allLangs) 1 }}
+                    <p class="langs masthead-langs">{{ range $i, $p := $allLangs }}{{ if gt $i 0 }}, {{ end }}{{ if eq $p.Language.Lang $.Language.Lang }}{{ $p.Language.Lang | upper }}{{ else }}<a href="{{ $p.RelPermalink }}">{{ $p.Language.Lang | upper }}</a>{{ end }}{{ end }}</p>
+                    {{ end }}
                 </div>
             </header>
 

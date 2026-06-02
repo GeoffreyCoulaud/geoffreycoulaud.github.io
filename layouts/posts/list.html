@@ -40,7 +40,6 @@
       {{ with $primary.Summary }}
       <p class="summary">{{ . | plainify | truncate 200 }}</p>
       {{ end }}
-      <p class="langs">{{ i18n "languages" }}: {{ range $i, $p := .pages }}{{ if gt $i 0 }}, {{ end }}{{ if eq $p.Language.Lang site.Language.Lang }}{{ $p.Language.Lang | upper }}{{ else }}<a href="{{ $p.RelPermalink }}">{{ $p.Language.Lang | upper }}</a>{{ end }}{{ end }}</p>
     </li>
   {{ end }}
   </ul>
