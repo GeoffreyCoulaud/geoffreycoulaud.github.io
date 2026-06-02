@@ -26,8 +26,8 @@
             <main class="container content" id="main">
                 {{ block "main" . }}{{ end }}
             </main>
-
-            <footer class="container" style="padding: 3em; font-size: 0.875rem; color: #888;">
+            {{ block "post-nav" . }}{{ end }}
+            <footer class="container" style="padding: 0 3rem 3rem; font-size: 0.875rem; color: #888;">
                 <a href="mailto:geoffrey.coulaud@gmail.com">geoffrey.coulaud@gmail.com</a>
                 &middot;
                 <a href="{{ "posts/index.xml" | relLangURL }}">RSS</a>

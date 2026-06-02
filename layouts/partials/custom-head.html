@@ -18,7 +18,7 @@ body {
   box-shadow: 0 0 8px rgba(0,0,0,.04);
   max-width: 52rem;
   margin: 0 auto;
-  gap: 4rem;
+  gap: 2rem;
 }
 .wrap .masthead,
 .wrap main.content,
@@ -38,8 +38,14 @@ main.content {
   margin-left: 0;
   margin-right: 0;
 }
+.e-content {
+  margin: 2rem 0;
+}
 .posts-list {
   padding-left: 0;
+}
+.back-nav {
+  padding: 0 3rem;
 }
 article > header h1 {
   margin-bottom: 1rem;
@@ -57,18 +63,20 @@ article > header h1 {
   font-size: 0.925rem;
   color: #666;
 }
-.posts-list .langs {
+.langs {
   margin: 0.5rem 0 0;
   font-size: 0.85rem;
   color: #999;
 }
-.posts-list .tag {
-  display: inline-block;
-  background: #eee;
-  border-radius: 4px;
-  padding: 0.125rem 0.5rem;
-  font-size: 0.8rem;
-  color: #555;
-  margin-right: 0.35rem;
+.langs a {
+  color: inherit;
+  text-decoration: none;
 }
+.langs a:hover {
+  text-decoration: underline;
+}
+.back-nav a {
+  color: #ac4142;
+}
+
 </style>

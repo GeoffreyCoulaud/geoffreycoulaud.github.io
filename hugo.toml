@@ -93,9 +93,6 @@ defaultContentLanguageInSubdir = false
 [pagination]
   pagerSize = 10
 
-[taxonomies]
-  tag = "tags"
-
 [outputs]
   home = ["html", "rss", "atom", "jsonfeed", "json"]
   section = ["html", "rss", "atom", "jsonfeed"]

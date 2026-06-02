@@ -1,7 +1,6 @@
 +++
 title = "Bonjour, le monde !"
 date = 2026-06-02
-tags = ["meta"]
 aliases = ["/bonjour", "/blog/hello-world"]
 +++
 
