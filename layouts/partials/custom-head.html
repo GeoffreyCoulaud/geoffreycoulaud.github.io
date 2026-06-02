@@ -1,6 +1,9 @@
 <style>
+:root {
+  --color-bg: #fffbf4;
+}
 body {
-  background-color: #fffbf4;
+  background-color: var(--color-bg);
   color: #232323;
 }
 .sidebar {
@@ -10,7 +13,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  background: #fff;
+  background: color-mix(in srgb, var(--color-bg), white 20%);
   box-shadow: 0 0 24px rgba(0,0,0,.04);
   max-width: 52rem;
   margin: 0 auto;
