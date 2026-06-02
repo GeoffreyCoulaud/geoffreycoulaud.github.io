@@ -1,4 +1,5 @@
 +++
 title = "Search"
-layout = "search"
 +++
+
+{{< form-search >}}

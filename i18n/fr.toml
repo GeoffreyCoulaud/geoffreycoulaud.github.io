@@ -52,15 +52,6 @@ other = "Publications taguées \"{{ . }}\""
 [table_of_contents]
 other = "Sommaire"
 
-[search_site]
-other = "Rechercher"
-
-[search_no_results]
-other = "Aucun résultat."
-
-[search_results]
-other = "Résultats trouvés :"
-
 [tag_cloud]
 other = "Nuage de tags"
 
@@ -75,3 +66,15 @@ other = "Annoter"
 
 [languages]
 other = "Langues"
+
+[search_help]
+other = "Entrez un terme de recherche pour parcourir le site."
+
+[search_site]
+other = "Rechercher sur le site"
+
+[search_no_results]
+other = "Aucun résultat."
+
+[search_results]
+other = "Résultats trouvés :"

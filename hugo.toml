@@ -31,6 +31,9 @@ defaultContentLanguageInSubdir = false
   [params.comments]
     enable = false
 
+  [params.search]
+    languages = ["fr", "en"]
+
 [languages.fr]
   locale = "fr-FR"
   direction = "ltr"
@@ -94,7 +97,7 @@ defaultContentLanguageInSubdir = false
   tag = "tags"
 
 [outputs]
-  home = ["html", "rss", "atom", "jsonfeed"]
+  home = ["html", "rss", "atom", "jsonfeed", "json"]
   section = ["html", "rss", "atom", "jsonfeed"]
   page = ["html"]
 

@@ -12,3 +12,12 @@ other = "← Back to posts"
 
 [languages]
 other = "Languages"
+
+[search_help]
+other = "To search the site, enter a search term."
+[search_site]
+other = "Search site"
+[search_no_results]
+other = "No results found."
+[search_results]
+other = "Found results:"
