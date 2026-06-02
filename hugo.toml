@@ -1,0 +1,39 @@
+baseURL = "https://geoffrey-coulaud.fr/"
+title = "Geoffrey Coulaud"
+enableGitInfo = true
+disableKinds = ["home"]
+
+defaultContentLanguage = "fr"
+defaultContentLanguageInSubdir = false
+
+[languages.fr]
+  languageName = "Français"
+  contentDir = "content"
+  weight = 1
+
+[languages.en]
+  languageName = "English"
+  contentDir = "content"
+  weight = 2
+
+[markup]
+  [markup.highlight]
+    style = "monokai"
+    noClasses = false
+
+[outputs]
+  section = ["HTML", "RSS"]
+
+[taxonomies]
+  tag = "tags"
+
+[related]
+  includeNewer = true
+  threshold = 80
+  toLower = true
+[[related.indices]]
+  name = "tags"
+  weight = 80
+[[related.indices]]
+  name = "date"
+  weight = 10
