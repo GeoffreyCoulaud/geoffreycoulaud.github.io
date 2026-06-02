@@ -29,6 +29,11 @@
   <ul class="posts-list">
   {{ range sort $sortedKeys "date" "desc" }}
     {{ $primary := index .pages 0 }}
+    {{ range .pages }}
+      {{ if eq .Language.Lang site.Language.Lang }}
+        {{ $primary = . }}
+      {{ end }}
+    {{ end }}
     <li>
       <time datetime="{{ $primary.Date.Format "2006-01-02" }}">{{ $primary.Date.Format "2006-01-02" }}</time>
       <a href="{{ $primary.RelPermalink }}">{{ $primary.Title }}</a>
