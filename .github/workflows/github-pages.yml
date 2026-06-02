@@ -1,54 +1,31 @@
-name: github-pages
+name: Deploy to GitHub Pages
+
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
         with:
-          node-version: "20"
-          cache: npm
-      - name: Install dependencies
-        run: npm install
-      - name: Build distributables
-        run: |
-          # --- Create the website structure
-          mkdir dist
-          mkdir dist/build
-          mkdir dist/build/css
+          fetch-depth: 0
 
-          # --- Copy base HTML + favicon
-          cp assets/pages/index.html dist
-          cp assets/images/favicon.ico dist
-
-          # --- Copy assets
-          cp -r assets dist
-
-          # --- Copy JS files (no build step for now)
-          cp -r src/js dist/build/js
-
-          # --- Compile Stylus to CSS
-          npx --no-install stylus src/stylus -o dist/build/css -c --include-css
-
-      - name: Upload artifacts
-        uses: actions/upload-pages-artifact@v3
+      - uses: peaceiris/actions-hugo@v3
         with:
-          name: github-pages
-          path: dist
+          hugo-version: "latest"
+          extended: true
+
+      - run: hugo --gc --minify
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public/
 
   deploy:
     needs: build
@@ -60,6 +37,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v4
