@@ -8,118 +8,122 @@ defaultContentLanguage = "fr"
 defaultContentLanguageInSubdir = false
 
 [params]
-  description = "Développeur full stack. Blog, projets, collaborations."
-  keywords = ["geoffrey coulaud", "full stack", "développeur", "developer", "blog"]
-  tagline = ""
-  footer = ""
-  colorScheme = "red"
   mainSections = ["posts"]
-  dateFormat = "2006-01-02"
-  dateFormatToc = "2006.01.02"
-  readmore = false
-  feedSize = 25
-  showAuthor = false
+  rssFullContent = true
+  favicon = "favicon.ico"
 
-  [params.assets]
-    favicon = "favicon.ico"
-    logo = "logo.png"
-    disable_fingerprinting = false
+  [params.sidebar]
+    emoji = "👨‍💻"
+    compact = false
 
-  [params.seo]
-    publisher = "Geoffrey Coulaud"
+  [params.footer]
+    since = 2026
+
+  [params.article]
+    headingAnchor = true
+    math = false
+    toc = true
+    readingTime = true
+
+    [params.article.license]
+      enabled = false
 
   [params.comments]
-    enable = false
+    enabled = false
 
-  [params.search]
-    languages = ["fr", "en"]
+  [params.opengraph.twitter]
+    site = "@geoffreycoulaud"
+    card = "summary_large_image"
+
+  [params.widgets]
+    homepage = [
+      {type = "search"},
+      {type = "archives", params = {limit = 5}}
+    ]
+
+  [params.colorScheme]
+    toggle = true
+    default = "auto"
+
+  [params.dateFormat]
+    published = "2006-01-02"
+    lastUpdated = "2006-01-02"
 
 [languages.fr]
+  label = "Français"
   locale = "fr-FR"
   direction = "ltr"
-  label = "Français"
   contentDir = "content"
   weight = 1
 
+  [languages.fr.params.sidebar]
+    subtitle = "Développeur full stack"
+
   [[languages.fr.menus.main]]
-    identifier = "home"
-    name = "Accueil"
-    pageRef = "/"
+    identifier = "about"
+    name = "À propos"
+    url = "/about/"
     weight = 1
+    [languages.fr.menus.main.params]
+      icon = "user"
   [[languages.fr.menus.main]]
     identifier = "posts"
     name = "Blog"
     pageRef = "/posts"
     weight = 2
+    [languages.fr.menus.main.params]
+      icon = "messages"
   [[languages.fr.menus.main]]
-    identifier = "search"
-    name = "Recherche"
-    pageRef = "/search"
-    weight = 3
-  [[languages.fr.menus.feeds]]
     identifier = "rss"
     name = "RSS"
     url = "/posts/index.xml"
-    weight = 1
+    weight = 3
+    [languages.fr.menus.main.params]
+      icon = "rss"
 
 [languages.en]
+  label = "English"
   locale = "en-US"
   direction = "ltr"
-  label = "English"
   contentDir = "content"
   weight = 2
 
+  [languages.en.params.sidebar]
+    subtitle = "Full stack developer"
+
   [[languages.en.menus.main]]
-    identifier = "home"
-    name = "Home"
-    pageRef = "/"
+    identifier = "about"
+    name = "About"
+    url = "/about/"
     weight = 1
+    [languages.en.menus.main.params]
+      icon = "user"
   [[languages.en.menus.main]]
     identifier = "posts"
     name = "Blog"
     pageRef = "/posts"
     weight = 2
+    [languages.en.menus.main.params]
+      icon = "messages"
   [[languages.en.menus.main]]
-    identifier = "search"
-    name = "Search"
-    pageRef = "/search"
-    weight = 3
-  [[languages.en.menus.feeds]]
     identifier = "rss"
     name = "RSS"
     url = "/posts/index.xml"
-    weight = 1
+    weight = 3
+    [languages.en.menus.main.params]
+      icon = "rss"
+
+[permalinks]
+  posts = "/posts/:slug/"
+  page = "/:slug/"
 
 [pagination]
   pagerSize = 10
 
 [outputs]
-  home = ["html", "rss", "atom", "jsonfeed", "json"]
-  section = ["html", "rss", "atom", "jsonfeed"]
+  home = ["html", "rss"]
+  section = ["html", "rss"]
   page = ["html"]
-
-[outputFormats]
-  [outputFormats.atom]
-    name = "atom"
-    mediaType = "text/xml"
-    baseName = "atom"
-    rel = "alternate"
-    isPlainText = false
-    isHTML = false
-    noUgly = true
-  [outputFormats.jsonfeed]
-    name = "jsonfeed"
-    mediaType = "application/feed+json"
-    baseName = "feed"
-    rel = "alternate"
-    isPlainText = true
-    isHTML = false
-
-[mediaTypes]
-  [mediaTypes."text/xml"]
-    suffixes = ["xml"]
-  [mediaTypes."application/feed+json"]
-    suffixes = ["json"]
 
 [sitemap]
   changefreq = "monthly"
@@ -141,9 +145,9 @@ defaultContentLanguageInSubdir = false
 [module]
   [module.hugoVersion]
     extended = true
-    min = "0.121.0"
+    min = "0.157.0"
   [[module.imports]]
-    path = "github.com/sergeyklay/gohugo-theme-ed"
+    path = "github.com/CaiJimmy/hugo-theme-stack/v4"
 
 [minify]
   disableXML = true

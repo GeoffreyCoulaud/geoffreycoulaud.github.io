@@ -1,5 +1,0 @@
-+++
-title = "Recherche"
-+++
-
-{{< form-search >}}

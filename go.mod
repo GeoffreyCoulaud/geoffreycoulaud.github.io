@@ -2,4 +2,4 @@ module github.com/GeoffreyCoulaud/geoffreycoulaud.github.io
 
 go 1.26.3
 
-require github.com/sergeyklay/gohugo-theme-ed v0.8.1 // indirect
+require github.com/CaiJimmy/hugo-theme-stack/v4 v4.0.3 // indirect
