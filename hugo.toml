@@ -130,6 +130,10 @@ defaultContentLanguageInSubdir = false
   filename = "sitemap.xml"
   priority = 0.5
 
+[mediaTypes]
+  [mediaTypes."text/javascript"]
+    suffixes = ["js"]
+
 [markup]
   defaultMarkdownHandler = "goldmark"
   [markup.highlight]

@@ -1,3 +1,15 @@
 :root {
     --menu-icon-separation: 12px;
+    --heading-border-size: 0px;
+    --blockquote-border-size: 0px;
+    --code-font-family: "Comic Mono", Menlo, Monaco, Consolas, "Courier New", monospace;
+    --accent-color: #841212;
+    --accent-color-darker: #6a0e0e;
+    --body-background: #eee6dd;
+}
+
+:root[data-scheme="dark"] {
+    --accent-color: #ee5656;
+    --accent-color-darker: #cc4444;
+    --body-background: #000000;
 }
