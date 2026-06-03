@@ -1,6 +1,6 @@
 # AGENTS.md — geoffreycoulaud.github.io
 
-Hugo blog, bilingual FR/EN, theme [Ed](https://github.com/sergeyklay/gohugo-theme-ed). Deployed to GitHub Pages.
+Hugo blog, bilingual FR/EN, theme [Stack](https://github.com/CaiJimmy/hugo-theme-stack) v4. Deployed to GitHub Pages.
 
 ## Setup after clone
 
@@ -10,7 +10,7 @@ git config core.hooksPath .githooks   # enables pre-commit hook
 
 ## Prerequisites
 
-- Hugo **extended** >= 0.121.0 (required by theme)
+- Hugo **extended** >= 0.157.0 (required by theme)
 - Go module for theme dependency resolution
 
 ## Commands
@@ -27,7 +27,9 @@ hugo --gc --minify  # CI command (same as GitHub Actions)
 
 French is the default language (served at `/`), English at `/en/`.
 
-Each post is a **page bundle**: a folder under `content/posts/<slug>/` containing:
+### Posts
+
+Each post is a **page bundle**: a folder under `content/posts/YYYY-MM-DD-slug/` containing:
 
 ```
 index.fr.md     # French version
@@ -35,11 +37,21 @@ index.en.md     # English version
 capture.png     # Media referenced in the post
 ```
 
-Use `index.fr.md` for French, `index.en.md` for English.
-
 Both language files **must share the same `date`** in frontmatter, otherwise Hugo won't link them as translations of each other.
 
+### Shares (English only)
+
+Each share is a **page bundle** under `content/shares/YYYY-MM-DD-slug/` with a single file:
+
+```
+index.en.md     # English only
+```
+
+Shares are English-only. They appear at `/en/shares/` with their own RSS feed at `/en/shares/index.xml`. Clicking a share redirects directly to the external link.
+
 ## Frontmatter
+
+### Posts
 
 ```toml
 +++
@@ -53,27 +65,62 @@ draft = false
 
 Only `title` and `date` are required. Set `draft = true` to hide a post from production.
 
-## Key configuration quirks
+### Shares
 
-- **`enableGitInfo = true`**: Dates are derived from git history. CI uses `fetch-depth: 0` for this reason. When testing locally, make sure you have git history to get correct timestamps.
-- **`disableKinds = ["taxonomy", "term"]`**: No tag or category pages are generated. Don't try to use taxonomies.
-- **`defaultContentLanguageInSubdir = false`**: French pages at `/posts/<slug>/`, English pages at `/en/posts/<slug>/`.
+```toml
++++
+title = "DuckDuckGo"
+link = "https://duckduckgo.com/"
+tags = ["privacy", "search"]
+date = 2026-06-03
++++
+
+Optional comment (markdown).
+```
+
+`title`, `link`, and `date` are required. `tags` are optional but recommended.
+
+## Key configuration
+
+- **`enableGitInfo = true`**: `.Lastmod` derived from git history. CI uses `fetch-depth: 0`.
+- **`defaultContentLanguageInSubdir = false`**: French pages at `/`, English pages at `/en/`.
+- **Taxonomies are enabled** (`disableKinds` removed). Tags only apply to shares — blog posts don't use them.
+- **Permalinks**: `posts = "/posts/:slug/"`, `shares = "/shares/:slug/"`, `page = "/:slug/"`.
 
 ## Custom layouts
 
-Directory `layouts/` overrides theme templates. Non-obvious customizations:
+Directory `layouts/` overrides theme templates:
 
-- **`layouts/posts/list.html`**: Merges translations by `TranslationKey` so each post appears once in the list (showing the current language version). Don't simplistically iterate `.Pages` on the blog index.
-- **`layouts/posts/single.html`**: Uses `GitInfo` for `created`/`updated` dates instead of frontmatter dates.
-- **`layouts/partials/custom-head.html`**: Injects site-specific CSS. Comic Mono is used only for `code`/`pre` blocks, not the whole site. The font is loaded from jsDelivr CDN in `head.html`.
-- **`layouts/partials/head.html`**: Overrides theme `<head>` and loads Comic Mono CSS.
-- **`layouts/_default/rss.xml`**: Custom RSS template.
+- **`layouts/partials/article/components/details.html`**: Uses `GitInfo.AuthorDate` for published dates instead of frontmatter dates.
+- **`layouts/partials/head/custom.html`**: Loads Comic Mono font from jsDelivr CDN for code blocks.
+- **`layouts/shares/list.html`**: Compact list of shares — each item links to the external URL, shows tags.
+- **`layouts/shares/single.html`**: Meta-redirect to the external link.
+- **`layouts/shares/rss.xml`**: RSS feed with external links and descriptions (comments).
+- **`layouts/page/search.html`** / **`layouts/_default/search.json`**: Search page templates for the Stack theme.
+- **`layouts/_default/search.json`**: JSON template for the search widget.
 
+## CSS customization
+
+`assets/scss/custom.scss` overrides Stack theme variables:
+```scss
+--menu-icon-separation: 12px;     // reduced icon-text gap
+--heading-border-size: 0px;       // no border on headings
+--blockquote-border-size: 0px;    // no border on blockquotes
+--code-font-family: "Comic Mono"; // Comic Mono for code
+--accent-color: #841212;          // dark red
+--body-background: #eee6dd;       // warm white
+```
+
+## Pre-commit hook
+
+Enforces:
+- **Posts**: `index.fr.md` + `index.en.md`, matching dates, date-prefixed folder name
+- **Shares**: `index.en.md`, matching date in frontmatter, date-prefixed folder name, `link` field required
 
 ## Deployment
 
-Push to `main` — GitHub Actions builds with `hugo --gc --minify` and deploys to GitHub Pages. No manual deploy step needed.
+Push to `main` — GitHub Actions builds with `hugo --gc --minify` and deploys to GitHub Pages.
 
-## i18n strings
+## i18n
 
-Found in `i18n/fr.toml` and `i18n/en.toml`. Use `{{ i18n "key" }}` or `{{ T "key" }}` in templates. Check existing keys before adding new ones.
+Stack theme provides i18n strings for FR and EN. No custom i18n files in the project — the theme's defaults are used.

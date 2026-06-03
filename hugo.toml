@@ -1,7 +1,6 @@
 baseURL = "https://geoffrey-coulaud.fr/"
 title = "Geoffrey Coulaud"
 enableGitInfo = true
-disableKinds = ["taxonomy", "term"]
 enableRobotsTXT = true
 
 defaultContentLanguage = "fr"
@@ -80,6 +79,13 @@ defaultContentLanguageInSubdir = false
     weight = 3
     [languages.fr.menus.main.params]
       icon = "rss"
+  [[languages.fr.menus.main]]
+    identifier = "shares"
+    name = "Partages"
+    url = "/en/shares/"
+    weight = 4
+    [languages.fr.menus.main.params]
+      icon = "link"
 
 [languages.en]
   label = "English"
@@ -112,9 +118,24 @@ defaultContentLanguageInSubdir = false
     weight = 3
     [languages.en.menus.main.params]
       icon = "rss"
+  [[languages.en.menus.main]]
+    identifier = "shares"
+    name = "Shares"
+    pageRef = "/shares"
+    weight = 4
+    [languages.en.menus.main.params]
+      icon = "link"
+  [[languages.en.menus.main]]
+    identifier = "shares-rss"
+    name = "Shares RSS"
+    url = "/en/shares/index.xml"
+    weight = 5
+    [languages.en.menus.main.params]
+      icon = "rss"
 
 [permalinks]
   posts = "/posts/:slug/"
+  shares = "/shares/:slug/"
   page = "/:slug/"
 
 [pagination]

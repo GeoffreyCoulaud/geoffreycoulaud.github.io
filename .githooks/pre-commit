@@ -1,62 +1,97 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Only check if content/posts/ has staged changes
-staged=$(git diff --cached --name-only --diff-filter=ACMR -- 'content/posts/')
-if [ -z "$staged" ]; then
-    exit 0
-fi
-
-# Collect unique post directories from staged files
-dirs=$(echo "$staged" | sed -n 's|^\(content/posts/[^/]*\)/.*|\1|p' | sort -u)
-
-errors=0
-for dir in $dirs; do
-    fr="$dir/index.fr.md"
-    en="$dir/index.en.md"
-
-    # Check both translations exist
-    if [ ! -f "$fr" ] || [ ! -f "$en" ]; then
-        echo "ERROR: $dir is missing a translation"
-        echo "  Expected: index.fr.md and index.en.md"
-        if [ -f "$fr" ]; then echo "  Found: index.fr.md (missing index.en.md)"; fi
-        if [ -f "$en" ]; then echo "  Found: index.en.md (missing index.fr.md)"; fi
-        if [ ! -f "$fr" ] && [ ! -f "$en" ]; then echo "  Neither file found"; fi
-        errors=$((errors + 1))
-        continue
+# Check posts (bilingual required)
+check_posts() {
+    local staged=$(git diff --cached --name-only --diff-filter=ACMR -- 'content/posts/')
+    if [ -z "$staged" ]; then
+        return 0
     fi
+    local dirs=$(echo "$staged" | sed -n 's|^\(content/posts/[^/]*\)/.*|\1|p' | sort -u)
+    local errors=0
+    for dir in $dirs; do
+        local fr="$dir/index.fr.md"
+        local en="$dir/index.en.md"
+        if [ ! -f "$fr" ] || [ ! -f "$en" ]; then
+            echo "ERROR: $dir is missing a translation"
+            echo "  Expected: index.fr.md and index.en.md"
+            if [ -f "$fr" ]; then echo "  Found: index.fr.md (missing index.en.md)"; fi
+            if [ -f "$en" ]; then echo "  Found: index.en.md (missing index.fr.md)"; fi
+            if [ ! -f "$fr" ] && [ ! -f "$en" ]; then echo "  Neither file found"; fi
+            errors=$((errors + 1))
+            continue
+        fi
+        local fr_date=$(grep -m1 '^date\s*=' "$fr" | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
+        local en_date=$(grep -m1 '^date\s*=' "$en" | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
+        if [ -z "$fr_date" ] || [ -z "$en_date" ]; then
+            echo "ERROR: $dir has a missing or unparseable date field"
+            [ -z "$fr_date" ] && echo "  index.fr.md: no date found"
+            [ -z "$en_date" ] && echo "  index.en.md: no date found"
+            errors=$((errors + 1))
+            continue
+        fi
+        if [ "$fr_date" != "$en_date" ]; then
+            echo "ERROR: $dir has mismatched dates: fr=$fr_date en=$en_date"
+            errors=$((errors + 1))
+        fi
+        local dirname=$(basename "$dir")
+        if [[ "$dirname" != "$fr_date"* ]]; then
+            echo "ERROR: $dir folder name must start with $fr_date (got '$dirname')"
+            errors=$((errors + 1))
+        fi
+    done
+    return $errors
+}
 
-    # Extract date from frontmatter (TOML: date = YYYY-MM-DD)
-    fr_date=$(grep -m1 '^date\s*=' "$fr" | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
-    en_date=$(grep -m1 '^date\s*=' "$en" | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
-
-    if [ -z "$fr_date" ] || [ -z "$en_date" ]; then
-        echo "ERROR: $dir has a missing or unparseable date field"
-        [ -z "$fr_date" ] && echo "  index.fr.md: no date found"
-        [ -z "$en_date" ] && echo "  index.en.md: no date found"
-        errors=$((errors + 1))
-        continue
+# Check shares (English only, link field required, date-prefixed folder like posts)
+check_shares() {
+    local staged=$(git diff --cached --name-only --diff-filter=ACMR -- 'content/shares/')
+    if [ -z "$staged" ]; then
+        return 0
     fi
+    local dirs=$(echo "$staged" | sed -n 's|^\(content/shares/[^/]*\)/.*|\1|p' | sort -u)
+    local errors=0
+    for dir in $dirs; do
+        local en="$dir/index.en.md"
+        if [ ! -f "$en" ]; then
+            echo "ERROR: $dir is missing index.en.md"
+            errors=$((errors + 1))
+            continue
+        fi
+        local fm_date=$(grep -m1 '^date\s*=' "$en" | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
+        if [ -z "$fm_date" ]; then
+            echo "ERROR: $en has a missing or unparseable date field"
+            errors=$((errors + 1))
+            continue
+        fi
+        local dirname=$(basename "$dir")
+        if [[ "$dirname" != "$fm_date"* ]]; then
+            echo "ERROR: $dir folder name must start with $fm_date (got '$dirname')"
+            errors=$((errors + 1))
+        fi
+        if ! grep -q '^link\s*=' "$en"; then
+            echo "ERROR: $en is missing the 'link' field"
+            errors=$((errors + 1))
+        fi
+    done
+    return $errors
+}
 
-    if [ "$fr_date" != "$en_date" ]; then
-        echo "ERROR: $dir has mismatched dates: fr=$fr_date en=$en_date"
-        errors=$((errors + 1))
-    fi
+post_errors=0
+share_errors=0
 
-    # Check directory name starts with the post date (YYYY-MM-DD)
-    dirname=$(basename "$dir")
-    if [[ "$dirname" != "$fr_date"* ]]; then
-        echo "ERROR: $dir folder name must start with $fr_date (got '$dirname')"
-        errors=$((errors + 1))
-    fi
-done
+check_posts
+post_errors=$?
 
-if [ "$errors" -gt 0 ]; then
+check_shares
+share_errors=$?
+
+total=$((post_errors + share_errors))
+
+if [ "$total" -gt 0 ]; then
     echo ""
-    echo "Commit blocked: $errors post(s) have issues."
-    echo "Requirements:"
-    echo "  - Both index.fr.md and index.en.md must exist"
-    echo "  - Both files must have identical date: YYYY-MM-DD"
-    echo "  - Folder name must start with YYYY-MM-DD"
+    echo "Commit blocked: $total issue(s)."
+    [ "$post_errors" -gt 0 ] && echo "  Posts: both index.fr.md + index.en.md, matching dates, date-prefixed folder"
+    [ "$share_errors" -gt 0 ] && echo "  Shares: YYYY-MM-DD-slug.en.md, matching date in frontmatter, link field required"
     exit 1
 fi

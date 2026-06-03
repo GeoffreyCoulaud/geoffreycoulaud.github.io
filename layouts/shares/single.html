@@ -1,0 +1,8 @@
+{{ define "head" }}
+    <meta http-equiv="refresh" content="0; url={{ .Params.link }}">
+    <link rel="canonical" href="{{ .Params.link }}">
+{{ end }}
+
+{{ define "main" }}
+    <p>Redirecting to <a href="{{ .Params.link }}">{{ .Params.link }}</a>...</p>
+{{ end }}
