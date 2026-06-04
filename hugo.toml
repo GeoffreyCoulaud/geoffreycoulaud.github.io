@@ -9,10 +9,10 @@ defaultContentLanguageInSubdir = false
 [params]
   mainSections = ["posts"]
   rssFullContent = true
-  favicon = "favicon.ico"
+  favicon = "dancing-bug.png"
 
   [params.sidebar]
-    emoji = "👨‍💻"
+    avatar = "dancing-bug.gif"
     compact = false
 
   [params.footer]

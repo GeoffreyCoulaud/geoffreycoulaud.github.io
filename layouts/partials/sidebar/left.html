@@ -7,19 +7,19 @@
 
     <header>
         {{ with .Site.Params.sidebar.avatar }}
-            {{- $avatar := partial "helper/image" (dict "Image" . "Resources" resources "Context" $) -}}
+            {{- $avif := resources.Get "dancing-bug.avif" -}}
+            {{- $webp := resources.Get "dancing-bug.webp" -}}
+            {{- $gif  := resources.Get "dancing-bug.gif" -}}
             <figure class="site-avatar">
                 <a href="{{ $.Site.Home.RelPermalink }}">
-                    <img src="{{ $avatar.Permalink }}" 
-                        width="{{ $avatar.Width }}"
-                        height="{{ $avatar.Height }}"
-                        class="site-logo"
-                        loading="lazy"
-                        alt="Avatar">
+                    <picture>
+                        {{- with $avif }}<source srcset="{{ .RelPermalink }}" type="image/avif">{{ end -}}
+                        {{- with $webp }}<source srcset="{{ .RelPermalink }}" type="image/webp">{{ end -}}
+                        {{- with $gif  }}
+                        <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" class="site-logo" loading="lazy" alt="Avatar">
+                        {{- end }}
+                    </picture>
                 </a>
-                {{ with $.Site.Params.sidebar.emoji }}
-                    <span class="emoji">{{ . }}</span>
-                {{ end }}
             </figure>
         {{ end }}
         
