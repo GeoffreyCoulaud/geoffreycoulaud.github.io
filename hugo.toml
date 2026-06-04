@@ -81,11 +81,18 @@ defaultContentLanguageInSubdir = false
       icon = "rss"
   [[languages.fr.menus.main]]
     identifier = "shares"
-    name = "Partages"
+    name = "Partages <sup>(en)</sup>"
     url = "/en/shares/"
     weight = 4
     [languages.fr.menus.main.params]
       icon = "link"
+  [[languages.fr.menus.main]]
+    identifier = "shares-rss"
+    name = "RSS Partages <sup>(en)</sup>"
+    url = "/en/shares/index.xml"
+    weight = 5
+    [languages.fr.menus.main.params]
+      icon = "rss"
 
 [languages.en]
   label = "English"
@@ -100,7 +107,7 @@ defaultContentLanguageInSubdir = false
   [[languages.en.menus.main]]
     identifier = "about"
     name = "About"
-    url = "/about/"
+    url = "/en/about/"
     weight = 1
     [languages.en.menus.main.params]
       icon = "user"
