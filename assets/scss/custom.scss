@@ -27,6 +27,16 @@
     font-weight: 500;
 }
 
+.welcome-content {
+    font-size: 1.6rem;
+    line-height: 1.7;
+    color: var(--card-text-color-main);
+}
+
+.welcome-content p {
+    margin: 0;
+}
+
 .shares-list {
     --card-padding: 2rem;
 }
