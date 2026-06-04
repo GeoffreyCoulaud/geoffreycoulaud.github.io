@@ -1,4 +1,5 @@
 :root {
+    --base-font-family: 'Inter', var(--sys-font-family), sans-serif;
     --menu-icon-separation: 12px;
     --heading-border-size: 0px;
     --blockquote-border-size: 0px;
@@ -12,6 +13,18 @@
     --accent-color: #ee5656;
     --accent-color-darker: #cc4444;
     --body-background: #000000;
+}
+
+.site-name,
+.section-title,
+.article-title,
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5 {
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 500;
 }
 
 .shares-list {
