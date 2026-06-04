@@ -159,7 +159,7 @@ defaultContentLanguageInSubdir = false
   priority = 0.5
 
 [mediaTypes]
-  [mediaTypes."text/javascript"]
+  [mediaTypes."application/javascript"]
     suffixes = ["js"]
 
 [markup]
