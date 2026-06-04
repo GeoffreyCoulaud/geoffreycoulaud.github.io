@@ -43,37 +43,40 @@ check_posts() {
     return $errors
 }
 
-# Check shares (English only, link field required, date-prefixed folder like posts)
+# Check shares (English only, flat files, link field required, date-prefixed filename)
 check_shares() {
     local staged=$(git diff --cached --name-only --diff-filter=ACMR -- 'content/shares/')
     if [ -z "$staged" ]; then
         return 0
     fi
-    local dirs=$(echo "$staged" | sed -n 's|^\(content/shares/[^/]*\)/.*|\1|p' | sort -u)
+    local files=$(echo "$staged" | grep '\.en\.md$' || true)
+    if [ -z "$files" ]; then
+        return 0
+    fi
     local errors=0
-    for dir in $dirs; do
-        local en="$dir/index.en.md"
-        if [ ! -f "$en" ]; then
-            echo "ERROR: $dir is missing index.en.md"
+    while IFS= read -r file; do
+        local basename=$(basename "$file" .en.md)
+        if [[ ! "$basename" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}- ]]; then
+            echo "ERROR: $file name must start with YYYY-MM-DD- (got '$basename')"
             errors=$((errors + 1))
             continue
         fi
-        local fm_date=$(grep -m1 '^date\s*=' "$en" | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
+        local file_date="${basename:0:10}"
+        local fm_date=$(grep -m1 '^date\s*=' "$file" | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
         if [ -z "$fm_date" ]; then
-            echo "ERROR: $en has a missing or unparseable date field"
+            echo "ERROR: $file has a missing or unparseable date field"
             errors=$((errors + 1))
             continue
         fi
-        local dirname=$(basename "$dir")
-        if [[ "$dirname" != "$fm_date"* ]]; then
-            echo "ERROR: $dir folder name must start with $fm_date (got '$dirname')"
+        if [ "$fm_date" != "$file_date" ]; then
+            echo "ERROR: $file date mismatch: filename=$file_date frontmatter=$fm_date"
             errors=$((errors + 1))
         fi
-        if ! grep -q '^link\s*=' "$en"; then
-            echo "ERROR: $en is missing the 'link' field"
+        if ! grep -q '^link\s*=' "$file"; then
+            echo "ERROR: $file is missing the 'link' field"
             errors=$((errors + 1))
         fi
-    done
+    done <<< "$files"
     return $errors
 }
 

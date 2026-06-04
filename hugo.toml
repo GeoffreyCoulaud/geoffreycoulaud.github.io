@@ -142,7 +142,7 @@ defaultContentLanguageInSubdir = false
 
 [permalinks]
   posts = "/posts/:slug/"
-  shares = "/shares/:slug/"
+  shares = "/shares/:contentbasename/"
   page = "/:slug/"
 
 [pagination]
