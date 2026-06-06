@@ -69,7 +69,7 @@ errors=0
 if [ $# -gt 0 ]; then
     # Pre-commit mode: check only the post dirs / share files referenced by staged changes
     post_dirs=$(printf '%s\n' "$@" | sed -n 's|^\(content/posts/[^/]*\)/.*|\1|p' | sort -u)
-    share_files=$(printf '%s\n' "$@" | grep '^content/shares/.*\.md$' | grep -v '_index' | sort -u)
+    share_files=$(printf '%s\n' "$@" | { grep '^content/shares/.*\.md$' || true; } | { grep -v '_index' || true; } | sort -u)
 
     for dir in $post_dirs; do
         check_post "$dir" || errors=$((errors + 1))
