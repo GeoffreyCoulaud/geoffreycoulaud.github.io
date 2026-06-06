@@ -66,6 +66,14 @@ collections:
     label: Pages
     i18n: true
     files:
+      - name: home
+        label: Accueil / Home
+        i18n: true
+        file: content/_index.{{locale}}.md
+        format: toml-frontmatter
+        fields:
+          - { name: title, label: Titre / Title, widget: string, i18n: true }
+          - { name: body, label: Contenu / Content, widget: markdown, required: false, i18n: true }
       - name: about
         label: À propos / About
         i18n: true
