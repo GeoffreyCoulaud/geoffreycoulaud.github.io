@@ -13,8 +13,8 @@ check_post() {
         return 1
     fi
 
-    local fr_date=$(grep -m1 '^date\s*=' "$fr" | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
-    local en_date=$(grep -m1 '^date\s*=' "$en" | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
+    local fr_date=$(grep -m1 '^date\s*=' "$fr" | tr -d '"' | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
+    local en_date=$(grep -m1 '^date\s*=' "$en" | tr -d '"' | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
 
     if [ -z "$fr_date" ] || [ -z "$en_date" ]; then
         echo "ERROR: $dir has a missing or unparseable date field"
@@ -39,7 +39,7 @@ check_post() {
 
 check_share() {
     local file="$1"
-    local basename=$(basename "$file" .md)
+    local basename=$(basename "$file" .en.md)
 
     if [[ ! "$basename" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}- ]]; then
         echo "ERROR: $file name must start with YYYY-MM-DD- (got '$basename')"
@@ -47,7 +47,7 @@ check_share() {
     fi
 
     local file_date="${basename:0:10}"
-    local fm_date=$(grep -m1 '^date\s*=' "$file" | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
+    local fm_date=$(grep -m1 '^date\s*=' "$file" | tr -d '"' | sed -n 's/.*=\s*\([0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}\).*/\1/p')
     if [ -z "$fm_date" ]; then
         echo "ERROR: $file has a missing or unparseable date field"
         return 1
@@ -69,7 +69,7 @@ errors=0
 if [ $# -gt 0 ]; then
     # Pre-commit mode: check only the post dirs / share files referenced by staged changes
     post_dirs=$(printf '%s\n' "$@" | sed -n 's|^\(content/posts/[^/]*\)/.*|\1|p' | sort -u)
-    share_files=$(printf '%s\n' "$@" | { grep '^content/shares/.*\.md$' || true; } | { grep -v '_index' || true; } | sort -u)
+    share_files=$(printf '%s\n' "$@" | { grep '^content/shares/.*\.en\.md$' || true; } | { grep -v '_index' || true; } | sort -u)
 
     for dir in $post_dirs; do
         check_post "$dir" || errors=$((errors + 1))
@@ -87,7 +87,7 @@ else
         check_post "$dir" || errors=$((errors + 1))
     done
 
-    for file in content/shares/*.md; do
+    for file in content/shares/*.en.md; do
         [ -f "$file" ] || continue
         [[ "$(basename "$file")" == _index* ]] && continue
         check_share "$file" || errors=$((errors + 1))

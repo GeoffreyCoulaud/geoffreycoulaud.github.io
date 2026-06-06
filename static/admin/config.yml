@@ -49,6 +49,7 @@ collections:
     folder: content/shares
     create: true
     format: toml-frontmatter
+    extension: en.md
     slug: "{{date | date('YYYY-MM-DD')}}-{{slug}}"
     summary: "{{date}} — {{title}}"
     view_groups:
