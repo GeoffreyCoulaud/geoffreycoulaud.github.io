@@ -2,11 +2,11 @@
 
 Hugo blog, bilingual FR/EN, theme [Stack](https://github.com/CaiJimmy/hugo-theme-stack) v4. Deployed to GitHub Pages.
 
-## Pour les agents IA
+## For AI agents
 
-- **Discuter avant d'implémenter.** Ne pas écrire de code avant d'avoir exploré les alternatives, posé les questions nécessaires et levé les ambiguïtés.
-- **Ne pas supposer.** Si un comportement n'est pas documenté ou vérifié, demander. Mieux vaut une question qu'une correction.
-- **Comparer les outils.** Un CMS, un format, une convention — il y a souvent plusieurs options. Prendre le temps d'évaluer laquelle correspond le mieux aux contraintes du projet avant de s'engager.
+- **Discuss before implementing.** Don't write code before exploring alternatives, asking the necessary questions, and resolving ambiguities.
+- **Don't assume.** If a behavior isn't documented or verified, ask. A question is better than a correction.
+- **Compare tools.** A CMS, a format, a convention — there are often several options. Take time to evaluate which fits the project's constraints before committing.
 
 ## Setup after clone
 
