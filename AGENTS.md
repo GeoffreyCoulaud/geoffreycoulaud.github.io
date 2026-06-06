@@ -2,6 +2,12 @@
 
 Hugo blog, bilingual FR/EN, theme [Stack](https://github.com/CaiJimmy/hugo-theme-stack) v4. Deployed to GitHub Pages.
 
+## Pour les agents IA
+
+- **Discuter avant d'implémenter.** Ne pas écrire de code avant d'avoir exploré les alternatives, posé les questions nécessaires et levé les ambiguïtés.
+- **Ne pas supposer.** Si un comportement n'est pas documenté ou vérifié, demander. Mieux vaut une question qu'une correction.
+- **Comparer les outils.** Un CMS, un format, une convention — il y a souvent plusieurs options. Prendre le temps d'évaluer laquelle correspond le mieux aux contraintes du projet avant de s'engager.
+
 ## Setup after clone
 
 ```bash
@@ -41,11 +47,7 @@ Both language files **must share the same `date`** in frontmatter, otherwise Hug
 
 ### Shares (English only)
 
-Each share is a **page bundle** under `content/shares/YYYY-MM-DD-slug/` with a single file:
-
-```
-index.en.md     # English only
-```
+Each share is a **flat file** under `content/shares/` named `YYYY-MM-DD-slug.en.md`. The `.en` suffix is mandatory — Hugo uses the filename suffix to determine the content language. Without it, the file is treated as French and won't appear under `/en/shares/`.
 
 Shares are English-only. They appear at `/en/shares/` with their own RSS feed at `/en/shares/index.xml`. Clicking a share redirects directly to the external link.
 
@@ -85,7 +87,7 @@ Optional comment (markdown).
 - **`enableGitInfo = true`**: `.Lastmod` derived from git history. CI uses `fetch-depth: 0`.
 - **`defaultContentLanguageInSubdir = false`**: French pages at `/`, English pages at `/en/`.
 - **Taxonomies are enabled** (`disableKinds` removed). Tags only apply to shares — blog posts don't use them.
-- **Permalinks**: `posts = "/posts/:slug/"`, `shares = "/shares/:slug/"`, `page = "/:slug/"`.
+- **Permalinks**: `posts = "/posts/:slug/"`, `shares = "/shares/:contentbasename/"`, `page = "/:slug/"`.
 
 ## Custom layouts
 
@@ -111,11 +113,31 @@ Directory `layouts/` overrides theme templates:
 --body-background: #eee6dd;       // warm white
 ```
 
-## Pre-commit hook
+## Sveltia CMS
 
-Enforces:
-- **Posts**: `index.fr.md` + `index.en.md`, matching dates, date-prefixed folder name
-- **Shares**: `index.en.md`, matching date in frontmatter, date-prefixed folder name, `link` field required
+Files: `static/admin/index.html` (CDN loader) + `static/admin/config.yml` (collections, i18n, backend).
+
+**Collections:**
+- `posts` — bilingual page bundles (`multiple_files` i18n, `path: "{{slug}}/index"`, `media_folder: ""` for inline media)
+- `shares` — English-only flat files (no i18n, `.en` suffix via slug template: `"{{date}}-{{slug}}.en"`, no `extension` override needed)
+- `pages` — file collection with `{{locale}}` in path for about page
+
+**Using the CMS:**
+- **Local**: `hugo serve`, open `/admin/index.html` in Chromium, click "Work with Local Repository"
+- **Production**: `/admin/` → "Sign In with Token" → GitHub PAT → commits directly to `main`
+
+**Backend**: `github` with `auth_methods: [token]`.
+
+## Content validation
+
+**Single source of truth:** `scripts/validate-content.sh`. Called with no arguments at CI, called with staged files from the pre-commit hook.
+
+- **Pre-commit hook** (`.githooks/pre-commit`): thin wrapper — passes `git diff --cached` file list to `scripts/validate-content.sh`.
+- **CI** (`.github/workflows/github-pages.yml`): runs `scripts/validate-content.sh` before `hugo --gc --minify`.
+
+Rules enforced:
+- **Posts**: both `index.fr.md` + `index.en.md`, matching dates, folder name starts with date
+- **Shares**: filename starts with `YYYY-MM-DD-`, date in frontmatter matches filename, `link` field required. Parser strips quotes (`tr -d '"'`) because Sveltia CMS writes TOML dates as strings (`date = "2026-06-06"`)
 
 ## Deployment
 
