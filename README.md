@@ -8,23 +8,44 @@ Blog personnel généré avec [Hugo](https://gohugo.io/) (extended) et le thème
 git config core.hooksPath .githooks   # active le hook pre-commit
 ```
 
-## Prérequis
-
-- [Hugo](https://gohugo.io/installation/) (extended, >= 0.157.0)
-
-## Démarrer
-
-```bash
-hugo serve    # dev server avec hot reload
-hugo          # build de production dans public/
-```
-
-Le site est bilingue français/anglais. Le français est la langue par défaut (racine du site), l'anglais est en `/en/`.
-
----
+## Editer le contenu
 
 <details>
-<summary><strong>Création manuelle</strong></summary>
+<summary><strong>Edition avec Sveltia CMS</strong></summary>
+
+Le site est configuré pour [Sveltia CMS](https://sveltiacms.app/en/docs/intro/), un CMS headless qui lit et écrit directement dans le dépôt Git.
+
+### Utilisation
+
+**En local (test)**
+
+```bash
+hugo serve
+```
+
+Ouvrir `http://localhost:1313/admin/index.html` dans un navigateur Chromium (Chrome, Edge, Brave). Cliquer **"Work with Local Repository"**, sélectionner la racine du projet. Les modifications sont écrites directement dans les fichiers locaux — pas besoin d'authentification. Committer ensuite manuellement.
+
+**En production**
+
+Une fois le site déployé, le CMS est accessible à l'adresse `/admin/`. Se connecter avec le bouton **"Sign In with Token"** :
+
+1. Suivre le lien affiché pour générer un [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) GitHub (scopes pré-remplis)
+2. Copier le token et le coller dans la boîte de dialogue
+
+Le CMS lit et commit directement sur le dépôt (`main`).
+
+### Articles
+
+Créer une entrée dans la collection **Articles**, remplir le contenu en français (langue par défaut) puis basculer sur l'anglais. Les champs `Date` et `Brouillon` sont automatiquement dupliqués entre les deux langues. Les médias uploadés dans l'éditeur sont placés dans le page bundle.
+
+### Partages
+
+Créer une entrée dans la collection **Shares**.
+
+</details>
+
+<details>
+<summary><strong>Edition manuelle</strong></summary>
 
 ### Articles
 
@@ -116,52 +137,18 @@ Le nom du fichier doit commencer par la date, et le champ `date` du frontmatter 
 
 </details>
 
----
+## Lancer localement
 
-<details>
-<summary><strong>Via Sveltia CMS</strong></summary>
-
-Le site est configuré pour [Sveltia CMS](https://sveltiacms.app/en/docs/intro/), un CMS headless qui lit et écrit directement dans le dépôt Git.
-
-### Utilisation
-
-**En local (test)**
+Prérequis : [Hugo](https://gohugo.io/installation/) (extended, >= 0.157.0)
 
 ```bash
-hugo serve
+hugo serve    # dev server avec hot reload
+hugo          # build de production dans public/
 ```
 
-Ouvrir `http://localhost:1313/admin/index.html` dans un navigateur Chromium (Chrome, Edge, Brave). Cliquer **"Work with Local Repository"**, sélectionner la racine du projet. Les modifications sont écrites directement dans les fichiers locaux — pas besoin d'authentification. Committer ensuite manuellement.
+Le site est bilingue français/anglais.  
+Le français est la langue par défaut (racine du site), l'anglais est en `/en/`.
 
-**En production**
-
-Une fois le site déployé, le CMS est accessible à l'adresse `/admin/`. Se connecter avec le bouton **"Sign In with Token"** :
-
-1. Suivre le lien affiché pour générer un [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) GitHub (scopes pré-remplis)
-2. Copier le token et le coller dans la boîte de dialogue
-
-Le CMS lit et commit directement sur le dépôt (`main`).
-
-### Articles
-
-Créer une entrée dans la collection **Articles**, remplir le contenu en français (langue par défaut) puis basculer sur l'anglais. Les champs `Date` et `Brouillon` sont automatiquement dupliqués entre les deux langues. Les médias uploadés dans l'éditeur sont placés dans le page bundle.
-
-### Partages
-
-Créer une entrée dans la collection **Shares**.
-
-</details>
-
----
-
-## URLs
-
-| Langue | Pattern |
-|---|---|
-| Français | `/posts/<slug>/` |
-| Anglais | `/en/posts/<slug>/` |
-| Partages | `/en/shares/<slug>/` |
-
-## Déploiement
+## Déployer
 
 Push sur `main` — GitHub Actions build avec `hugo --gc --minify` et déploie sur GitHub Pages.
