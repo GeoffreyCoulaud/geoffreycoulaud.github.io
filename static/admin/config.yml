@@ -1,0 +1,78 @@
+backend:
+  name: github
+  repo: geoffreycoulaud/geoffreycoulaud.github.io
+  branch: main
+  auth_methods: [token]
+
+site_url: https://geoffrey-coulaud.fr/
+
+media_folder: static/media
+public_folder: /media
+
+slug:
+  encoding: unicode
+  clean_accents: true
+
+i18n:
+  structure: multiple_files
+  locales: [fr, en]
+  default_locale: fr
+
+collections:
+  - name: posts
+    label: Articles
+    label_singular: Article
+    folder: content/posts
+    create: true
+    format: toml-frontmatter
+    i18n: true
+    slug: "{{date | date('YYYY-MM-DD')}}-{{slug}}"
+    path: "{{date | date('YYYY-MM-DD')}}-{{slug}}/index"
+    media_folder: ""
+    public_folder: ""
+    summary: "{{date}} — {{title}}"
+    view_groups:
+      - label: Année
+        field: date
+        pattern: \d{4}
+    fields:
+      - { name: title, label: Titre, widget: string, i18n: true }
+      - { name: date, label: Date, widget: datetime, type: date, format: YYYY-MM-DD, i18n: duplicate }
+      - { name: description, label: Description, widget: text, required: false, i18n: true }
+      - { name: aliases, label: Alias, widget: list, required: false, i18n: duplicate }
+      - { name: draft, label: Brouillon, widget: boolean, default: false, i18n: duplicate }
+      - { name: body, label: Contenu, widget: markdown, i18n: true }
+
+  - name: shares
+    label: Shares
+    label_singular: Share
+    folder: content/shares
+    create: true
+    format: toml-frontmatter
+    slug: "{{date | date('YYYY-MM-DD')}}-{{slug}}"
+    summary: "{{date}} — {{title}}"
+    view_groups:
+      - label: Année
+        field: date
+        pattern: \d{4}
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: link, label: Link, widget: string }
+      - { name: date, label: Date, widget: datetime, type: date, format: YYYY-MM-DD }
+      - { name: tags, label: Tags, widget: list, required: false }
+      - { name: body, label: Comment, widget: markdown, required: false }
+
+  - name: pages
+    label: Pages
+    i18n: true
+    files:
+      - name: about
+        label: À propos / About
+        i18n: true
+        file: content/page/about/index.{{locale}}.md
+        format: toml-frontmatter
+        fields:
+          - { name: title, label: Titre / Title, widget: string, i18n: true }
+          - { name: date, label: Date, widget: datetime, type: date, format: YYYY-MM-DD, i18n: duplicate }
+          - { name: description, label: Description, widget: text, required: false, i18n: true }
+          - { name: body, label: Contenu / Content, widget: markdown, required: false, i18n: true }
