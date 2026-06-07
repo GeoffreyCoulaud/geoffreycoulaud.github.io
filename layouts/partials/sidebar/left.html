@@ -51,7 +51,9 @@
 
     <ol class="menu" id="main-menu">
         {{ $currentPage := . }}
-        {{ range .Site.Menus.main }}
+        {{ $internal := where .Site.Menus.main "Params.external" "!=" true }}
+        {{ $external := where .Site.Menus.main "Params.external" true }}
+        {{ range $internal }}
         {{ $active := or (eq $currentPage.RelPermalink .URL) (or ($currentPage.HasMenuCurrent "main" .) ($currentPage.IsMenuCurrent "main" .)) }}
         <li {{ if $active }} class='current'{{ end }}>
             <a href='{{ .URL }}' {{ if .Params.newTab }}target="_blank"{{ end }}>
@@ -61,6 +63,20 @@
                 <span>{{- .Name | safeHTML -}}</span>
             </a>
         </li>
+        {{ end }}
+        {{ if $external }}
+        <li class="menu-separator"><hr></li>
+        {{ range $external }}
+        {{ $active := or (eq $currentPage.RelPermalink .URL) (or ($currentPage.HasMenuCurrent "main" .) ($currentPage.IsMenuCurrent "main" .)) }}
+        <li {{ if $active }} class='current'{{ end }}>
+            <a href='{{ .URL }}' {{ if .Params.newTab }}target="_blank"{{ end }}>
+                {{ with .Params.Icon }}
+                    {{ partial "helper/icon" . }}
+                {{ end }}
+                <span>{{- .Name | safeHTML -}}</span>
+            </a>
+        </li>
+        {{ end }}
         {{ end }}
         <li class="menu-bottom-section">
             <ol class="menu">

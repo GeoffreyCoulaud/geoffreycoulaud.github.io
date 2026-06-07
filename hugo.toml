@@ -93,6 +93,24 @@ defaultContentLanguageInSubdir = false
     weight = 5
     [languages.fr.menus.main.params]
       icon = "rss"
+  [[languages.fr.menus.main]]
+    identifier = "github"
+    name = "GitHub"
+    url = "https://github.com/GeoffreyCoulaud"
+    weight = 6
+    [languages.fr.menus.main.params]
+      icon = "brand-github"
+      external = true
+      newTab = true
+  [[languages.fr.menus.main]]
+    identifier = "linkedin"
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/geoffrey-coulaud-2b6b32276/"
+    weight = 7
+    [languages.fr.menus.main.params]
+      icon = "brand-linkedin"
+      external = true
+      newTab = true
 
 [languages.en]
   label = "English"
@@ -139,6 +157,24 @@ defaultContentLanguageInSubdir = false
     weight = 5
     [languages.en.menus.main.params]
       icon = "rss"
+  [[languages.en.menus.main]]
+    identifier = "github"
+    name = "GitHub"
+    url = "https://github.com/GeoffreyCoulaud"
+    weight = 6
+    [languages.en.menus.main.params]
+      icon = "brand-github"
+      external = true
+      newTab = true
+  [[languages.en.menus.main]]
+    identifier = "linkedin"
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/geoffrey-coulaud-2b6b32276/"
+    weight = 7
+    [languages.en.menus.main.params]
+      icon = "brand-linkedin"
+      external = true
+      newTab = true
 
 [permalinks]
   posts = "/posts/:slug/"

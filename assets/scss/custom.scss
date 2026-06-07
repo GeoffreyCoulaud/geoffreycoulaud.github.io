@@ -61,3 +61,11 @@
     margin-top: 0.2rem;
     margin-bottom: 0;
 }
+
+.menu-separator hr {
+    height: 3px;
+    width: 50px;
+    background: var(--body-text-color);
+    border: none;
+    margin: var(--spacing-lg) 0;
+}
