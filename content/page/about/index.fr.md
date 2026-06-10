@@ -5,7 +5,7 @@ description = ""
 slug = "about"
 +++
 
-## Mon Parcours
+## Mon parcours
 
 S'il y a une constante dans ce que je fais, c'est le changement.
 J'ai commencé à programmer à 15 ans en 2016, comme beaucoup avec le cours HTML / CSS d'OpenClassrooms, puis j'ai fait du JS, puis PHP, puis j'ai appris à utiliser MySQL. Tout était prétexte à créer un site web, et je ne me privais pas. Tant mieux, c'est comme ça que j'apprends le mieux.
