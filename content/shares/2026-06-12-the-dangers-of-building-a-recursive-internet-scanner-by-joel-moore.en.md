@@ -1,5 +1,5 @@
 +++
-title = "The dangers of building a recursive internet scanner by joel moore"
+title = "The dangers of building a recursive internet scanner"
 link = "https://www.youtube.com/watch?v=bCNnloBaw_U"
 date = "2026-06-12"
 tags = [ "video", "security", "open-source" ]
