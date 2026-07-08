@@ -1,5 +1,5 @@
 +++
-title = "jimparis/qr-font"
+title = "jimparis's qr-font"
 link = "https://github.com/jimparis/qr-font"
 date = "2026-07-09"
 tags = [ "font", "open-source" ]
