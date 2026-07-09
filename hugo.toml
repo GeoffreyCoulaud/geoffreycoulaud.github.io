@@ -3,6 +3,15 @@ title = "Geoffrey Coulaud"
 enableGitInfo = true
 enableRobotsTXT = true
 
+# Front matter dates are bare (YYYY-MM-DD), so they need a timezone to resolve to
+# an instant. Without this they'd be read as midnight UTC, ie. ahead of local time.
+timeZone = "Europe/Paris"
+
+# Deploys only happen on push to main, so a future-dated page would never appear
+# on its own. Excluding it would hide content without ever publishing it later.
+# Use the `draft` field to hold something back.
+buildFuture = true
+
 defaultContentLanguage = "fr"
 defaultContentLanguageInSubdir = false
 
