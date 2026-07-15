@@ -48,6 +48,9 @@ defaultContentLanguageInSubdir = false
       {type = "search"},
       {type = "archives", params = {limit = 5}}
     ]
+    shares = [
+      {type = "search"}
+    ]
 
   [params.colorScheme]
     toggle = true
